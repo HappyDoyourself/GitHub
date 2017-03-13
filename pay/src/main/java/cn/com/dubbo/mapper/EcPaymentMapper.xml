@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dubbo.mapper.EcPaymentMapper" >
+	
+    <resultMap id="ecPaymentTypeParamsResult" type="cn.com.dubbo.model.EcPaymentTypeParams">
+         <result column="PAYMENT_TYPE_PARAMS_ID" property="paymentTypeParamsId"  />
+         <result column="PAYMENT_TYPE_ID" property="paymentTypeId" />
+         <result column="PARAMS_NAME" property="paramsName"/>
+         <result column="PARAMS_VALUE" property="paramsValue"/>
+         <result column="PARAMS_NOTES" property="paramsNotes"/>
+    </resultMap>
+    
+    
+    
+    <resultMap id="ecPaymentTypeResult" type="cn.com.dubbo.model.EcPaymentType">
+        <result column="PAYMENT_TYPE_ID" property="paymentTypeId" />
+        <result column="PAYMENT_TYPE_NO" property="paymentTypeNo" />
+        <result column="PAYMENT_TYPE_NAME" property="paymentTypeName" />
+        <result column="PAYMENT_TYPE_LOGO" property="paymentTypeLogo" />
+        <result column="PAYMENT_TYPE_ORDER" property="paymentTypeOrder" />
+        <result column="IS_OFFLINE" property="isOffline" />
+        <result column="IS_ENABLE" property="isEnable" />
+        <result column="ARRIVAL_TIME" property="arrivalTime" />
+        
+        <result column="COMMISION_RATE" property="commisionRate" />
+        <result column="PAYMENT_TYPE_NOTES" property="paymentTypeNotes" />
+        <result column="PARTNER_ID" property="partnerId" />
+        <result column="PARTNER_KEY" property="partnerKey" />
+        <result column="PARTNER_NAME" property="partnerName" />
+        <result column="SHOW_URL" property="showUrl" />
+        <result column="RETURN_URL" property="returnUrl" />
+        <result column="NOTIFY_URL" property="notifyUrl" />
+        <result column="MANAGER_EMAIL" property="managerEmail" />
+        <result column="PRIVATE_DOMAIN" property="privateDomain" />
+        <result column="SERVICE_VERSION" property="serviceVersion" />
+        <result column="PRIVATE_KEY_PATH" property="privateKeyPath" />
+        <result column="PUBLIC_KEY_PATH" property="publicKeyPath" />
+        <result column="OFFLINE_BANK_NAME" property="offlineBankName" />
+        <result column="OFFLINE_ACCOUNT_NAME" property="offlineAccountName" />
+        <result column="OFFLINE_ACCOUNT_PRIVATE" property="offlineAccountPrivate" />
+        <result column="OFFLINE_ACCOUNT_PUBLIC" property="offlineAccountPublic" />
+        <result column="IS_DELETE" property="isDelete" />
+        <result column="ADD_USER_ID" property="addUserId" />
+        <result column="ADD_TIME" property="addTime" />
+        <result column="EDIT_USER_ID" property="editUserId" />
+        <result column="EDIT_TIME" property="editTime" />
+        <result column="EC_PRE_ACTION_URL" property="ecPreActionUrl" />
+    </resultMap>
+
+	 <sql id="Base_sql">
+    	PAYMENT_TYPE_ID,PAYMENT_TYPE_NO,PAYMENT_TYPE_NAME,PAYMENT_TYPE_LOGO,PAYMENT_TYPE_ORDER,IS_OFFLINE,IS_ENABLE,
+    	ARRIVAL_TIME,COMMISION_RATE,PAYMENT_TYPE_NOTES,PARTNER_ID,PARTNER_KEY,PARTNER_NAME,SHOW_URL,RETURN_URL,NOTIFY_URL,MANAGER_EMAIL,
+    	PRIVATE_DOMAIN,SERVICE_VERSION,PRIVATE_KEY_PATH,PUBLIC_KEY_PATH,OFFLINE_BANK_NAME,OFFLINE_ACCOUNT_NAME,OFFLINE_ACCOUNT_PRIVATE,OFFLINE_ACCOUNT_PUBLIC,
+        IS_DELETE,ADD_USER_ID,ADD_TIME,EDIT_USER_ID,EDIT_TIME,EC_PRE_ACTION_URL
+    </sql>
+    
+    <sql id="getEcPaymentTypeBaseSql">
+   		from ec_payment_type
+    	where IS_DELETE='N'
+    	<if test="paymentTypeId != null and paymentTypeId !=''">
+				and PAYMENT_TYPE_ID = #{paymentTypeId}
+		</if>
+        <if test="paymentTypeNo != null and paymentTypeNo !=''">
+            PAYMENT_TYPE_NO = #{paymentTypeNo}
+        </if>
+        <if test="paymentTypeName != null and paymentTypeName !=''">
+            PAYMENT_TYPE_NAME = #{paymentTypeName}
+        </if>
+    	<if test="isOffline != null and isOffline !=''">
+            IS_OFFLINE = #{isOffline}
+        </if>
+        <if test="isEnable != null and isEnable !=''">
+            IS_ENABLE = #{isEnable}
+        </if>
+        <if test="arrivalTime != null and arrivalTime !=''">
+            ARRIVAL_TIME = #{arrivalTime}
+        </if>
+        <if test="commisionRate != null and commisionRate !=''">
+            COMMISION_RATE = #{commisionRate}
+        </if>
+        <if test="paymentTypeNotes != null and paymentTypeNotes !=''">
+            PAYMENT_TYPE_NOTES = #{paymentTypeNotes}
+        </if>
+        <if test="partnerId != null and partnerId !=''">
+            PARTNER_ID = #{partnerId}
+        </if>
+        <if test="partnerKey != null and partnerKey !=''">
+            PARTNER_KEY = #{partnerKey}
+        </if>
+        <if test="partnerName != null and partnerName !=''">
+            PARTNER_NAME = #{partnerName}
+        </if>
+        <if test="showUrl != null and showUrl !=''">
+            SHOW_URL = #{showUrl}
+        </if>
+        <if test="returnUrl != null and returnUrl !=''">
+            RETURN_URL = #{returnUrl}
+        </if>
+        <if test="notifyUrl != null and notifyUrl !=''">
+            NOTIFY_URL = #{notifyUrl}
+        </if>
+        <if test="managerEmail != null and managerEmail !=''">
+            MANAGER_EMAIL = #{managerEmail}
+        </if>
+        <if test="privateDomain != null and privateDomain !=''">
+            PRIVATE_DOMAIN = #{privateDomain}
+        </if>
+        <if test="serviceVersion != null and serviceVersion !=''">
+            SERVICE_VERSION = #{serviceVersion}
+        </if>
+        <if test="privateKeyPath != null and privateKeyPath !=''">
+            PRIVATE_KEY_PATH = #{privateKeyPath}
+        </if>
+        <if test="publicKeyPath != null and publicKeyPath !=''">
+            PUBLIC_KEY_PATH = #{publicKeyPath}
+        </if>
+        <if test="offlineBankName != null and offlineBankName !=''">
+            OFFLINE_BANK_NAME = #{offlineBankName}
+        </if>
+        <if test="offlineAccountName != null and offlineAccountName !=''">
+            OFFLINE_ACCOUNT_NAME = #{offlineAccountName}
+        </if>
+        <if test="offlineAccountPrivate != null and offlineAccountPrivate !=''">
+            OFFLINE_ACCOUNT_PRIVATE = #{offlineAccountPrivate}
+        </if>
+        <if test="offlineAccountPublic != null and offlineAccountPublic !=''">
+            OFFLINE_ACCOUNT_PUBLIC = #{offlineAccountPublic}
+        </if>
+        order by PAYMENT_TYPE_ORDER asc
+   </sql>
+
+	<select id="getPaymentInfoByNo" parameterType="String" resultMap="ecPaymentTypeResult">
+    	select <include refid="Base_sql"/> 
+    	from ec_payment_type
+    	where is_delete='N'
+        and IS_ENABLE = 'Y'
+    	and payment_type_no = #{paymentTypeNo}
+    </select>
+    
+    <select id="getPaymentInfoById" parameterType="String" resultMap="ecPaymentTypeResult">
+        select <include refid="Base_sql"/>
+        from ec_payment_type
+        where is_delete='N'
+        and IS_ENABLE = 'Y'
+        and payment_type_id = #{paymentTypeId}
+    </select>
+    
+    <select id="getEcPaymentTypeList" parameterType="cn.com.dubbo.model.EcPaymentType" resultMap="ecPaymentTypeResult">
+    	select  
+    	<include refid="Base_sql"/>
+    	<include refid="getEcPaymentTypeBaseSql"/>
+    </select>
+    
+    <!-- paras语句开始 -->
+    <select id="getEcPaymentTypeParamsBytypeId" resultMap="ecPaymentTypeParamsResult" parameterType="Integer">
+    	select t.* from ec_payment_type_params  t where t.PAYMENT_TYPE_ID = #{value}
+    </select>
+
+</mapper>

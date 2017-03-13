@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dubbo.mapper.PayTypeMapper" >
+
+	<resultMap id="PayTypeRslt" type="cn.com.dubbo.model.PayType">
+		<result column="type_no" property="SortCode" />
+		<result column="goods_sum_fee" property="SortAmount" />
+	</resultMap>
+	
+	<resultMap id="PayOrderItemTypeRslt" type="cn.com.dubbo.model.PayOrderItemType">
+		<result column="type_no" property="code" />
+		<result column="goods_name" property="name" />
+		<result column="goods_sum_fee" property="price" />
+		<result column="goods_amount" property="number" />
+	</resultMap>
+
+	<select id="getOrderItemGroupType" parameterType="String" resultMap="PayTypeRslt">
+		select t.type_no,sum(t.goods_sum_fee) as goods_sum_fee from (
+			select 
+				(select type_no from pay_type pt where pt.goods_no = oi.goods_no and pt.payment_type_no = #{paymentNo} ) as type_no,
+				oi.goods_sum_fee 
+			from order_item oi where oi.order_no = #{orderNo}) t GROUP BY t.type_no
+	</select>
+	
+	<select id="getOrderItemDetailType" parameterType="String" resultMap="PayOrderItemTypeRslt">
+		select 
+			(select type_no from pay_type pt where pt.goods_no = oi.goods_no and pt.payment_type_no = #{paymentNo}) as type_no,
+			oi.goods_sum_fee ,
+			oi.goods_name,
+			oi.goods_amount
+		from order_item oi where oi.order_no = #{orderNo}
+	</select>
+</mapper>

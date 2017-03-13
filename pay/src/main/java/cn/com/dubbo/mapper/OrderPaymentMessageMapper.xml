@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dubbo.mapper.OrderPaymentMessageMapper" >
+  
+  <resultMap id="OrderPaymentTypeListResult" type="cn.com.dubbo.model.OrderPaymentTypeList" >
+        <result column="LIST_ID" property="listId" />
+        <result column="ORDER_ID" property="orderId"/>
+        <result column="PAYMENT_TYPE_ID" property="paymentTypeId" />
+        <result column="PAYMENT_NO" property="paymentNo"/>
+        <result column="PAID_TIME" property="paidTime"/>
+        <result column="PAID_FEE" property="paidFee"/>
+        <result column="IS_DELETE" property="isDelete" />
+        <result column="ADD_USER_ID" property="addUserId"  />
+        <result column="ADD_TIME" property="addTime"  />
+        <result column="EDIT_USER_ID" property="editUserId" />
+        <result column="EDIT_TIME" property="editTime" />
+   </resultMap>
+
+
+
+
+
+  
+   <!--插入订单支付日志-->
+   <insert id="saveOrderPaymentMessageLog" parameterType="cn.com.dubbo.model.OrderPaymentMessageLog">
+         insert into order_payment_message_log (
+                 PAYMENT_LOG_ID, 
+                 MESSAGE_TYPE, 
+                 RESPONSE_TYPE,
+                 MESSAGE,   
+                 IS_DELETE)
+          values (
+          		 #{paymentLogId},
+                  #{messageType}, 
+                  #{responseType}, 
+                  #{message}, 
+                  #{isDelete}
+               )
+    </insert>
+  
+  <!--插入订单支付日志-->
+   <insert id="saveOrderPaymentTypeList" parameterType="cn.com.dubbo.model.OrderPaymentTypeList">
+         insert into order_payment_type_list (
+                 ORDER_ID, 
+                 PAYMENT_TYPE_ID,
+                 PAYMENT_NO, 
+                 PAID_TIME, 
+                 PAID_FEE,
+                 IS_DELETE, 
+                 ADD_USER_ID, 
+                 ADD_TIME, 
+                 EDIT_USER_ID, 
+                 EDIT_TIME)
+          values (
+                  #{orderId}, 
+                  #{paymentTypeId}, 
+                  #{paymentNo}, 
+                  #{paidTime},
+                  #{paidFee},
+                  #{isDelete}, 
+                  #{addUserId},
+                  #{addTime}, 
+                  #{editUserId}, 
+                  #{editTime}
+               )
+    </insert>
+    
+    <!-- 获取list信息 -->
+	<select id="getPaymentTypeList" parameterType="cn.com.dubbo.model.OrderPaymentTypeList"
+		resultMap="OrderPaymentTypeListResult">
+	select
+		l.list_id ,
+		l.order_id,
+		l.payment_type_id,
+		l.payment_No,
+		l.paid_Time,
+		l.paid_fee,
+		l.is_Delete,
+		l.ADD_USER_ID,
+		l.ADD_TIME,
+		l.EDIT_USER_ID,
+		l.EDIT_TIME
+	from order_payment_type_list l 
+	where 1=1
+		<if test="orderId  != null and orderId !=''">
+			and l.order_id=#{orderId} 
+		</if>
+		<if test="paymentTypeId  != null and paymentTypeId !=''">
+			and l.payment_type_id=#{paymentTypeId}  
+		</if>
+		<if test="paymentNo != null and paymentNo !=''">
+			and l.payment_No=#{paymentNo}  
+		</if>
+	</select>
+
+
+    <select id="countRequestLog" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(message_id) FROM order_payment_message_log m where 1=1 AND  m.payment_log_id=#{paymentLogId}
+    </select>
+</mapper>

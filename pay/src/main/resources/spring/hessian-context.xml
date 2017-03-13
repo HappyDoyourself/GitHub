@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 扫描并加注HessianService 使用的bean -->
+	<context:annotation-config />
+	
+	<!--Hessian 启动BeanNameMapping 映射功能,以httpRequest作为处理Adapter-->
+<!-- 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="defaultHandler" ref="httpRequestHandlerAdapter" />
+	</bean> -->
+
+	<!--hessian-->
+<!-- 	<bean id="httpRequestHandlerAdapter" class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
+		<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+		<bean id="QueryProvinceServiceImpl" class="cn.com.dubbo.service.order.impl.QueryProvinceServiceImpl"/>
+		此处配置具体每个service
+		<bean name="/QueryProvinceService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		    <property name="service" ref="QueryProvinceServiceImpl"/>
+		    <property name="serviceInterface" value="cn.com.dubbo.service.order.QueryProvinceService"/>
+	</bean> -->
+
+</beans>

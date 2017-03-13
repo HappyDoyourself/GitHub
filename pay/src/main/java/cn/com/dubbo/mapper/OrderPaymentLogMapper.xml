@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dubbo.mapper.OrderPaymentLogMapper" >
+
+
+    <resultMap id="OrderPaymentLogResult" type="cn.com.dubbo.model.OrderPaymentLog" >
+        <result column="PAYMENT_LOG_ID" property="paymentLogId" />
+        <result column="BUSINESS_TYPE" property="businessType"/>
+        <result column="BUSINESS_ID" property="businessId"/>
+        <result column="PAYMENT_TYPE_ID" property="paymentTypeId" />
+        <result column="PAYMENT_NO" property="paymentNo"/>
+        <result column="PAYMENT_FEE" property="paymentFee"/>
+        <result column="PAID_FEE" property="paidFee"/>
+        <result column="PAYMENT_TIME" property="paymentTime"/>
+        <result column="MEMBER_ID" property="memberId" />
+        <result column="BACK_NO" property="backNo"  />
+        <result column="BACK_TIME" property="backTime"/>
+        <result column="BACK_STATE" property="backState"/>
+        <result column="BACK_NOTES" property="backNotes" />
+        <result column="IS_DELETE" property="isDelete" />
+        <result column="ADD_USER_ID" property="addUserId"  />
+        <result column="ADD_TIME" property="addTime"  />
+        <result column="EDIT_USER_ID" property="editUserId" />
+        <result column="EDIT_TIME" property="editTime" />
+        <result column="CHANNEL" property="channel" />
+        <result column="RETURN_URL" property="returnUrl" />
+        <result column="CARD_NO" property="cardNo" />
+        <result column="REQ_TXN_TIME" property="reqTxnTime" />
+        <result column="OPEN_ID" property="openId" />
+        <result column="FIELD_ONE" property="fieldOne" />
+        <result column="FIELD_TWO" property="fieldTwo" />
+        <result column="QUERY_STATE" property="queryState" />
+        <result column="PAID_STATE" property="paidState" />
+        <result column="REFUND_STATE" property="refundState" />
+    </resultMap>
+
+	<!--插入订单支付日志-->
+    <insert id="saveOrderPaymentLog" parameterType="cn.com.dubbo.model.OrderPaymentLog" useGeneratedKeys="true" keyProperty="paymentLogId" >
+    
+        insert into order_payment_log (
+        BUSINESS_TYPE,
+        BUSINESS_ID,
+        PAYMENT_TYPE_ID,
+        PAYMENT_NO,
+        PAYMENT_FEE,
+        PAID_FEE,
+        PAYMENT_TIME,
+        MEMBER_ID,
+        BACK_NO,
+        BACK_TIME,
+        BACK_STATE,
+        BACK_NOTES,
+        IS_DELETE,
+        ADD_USER_ID,
+        ADD_TIME,
+        EDIT_USER_ID,
+        EDIT_TIME,
+        CHANNEL,
+        RETURN_URL,
+        CARD_NO,
+        REQ_TXN_TIME,
+        OPEN_ID,
+        FIELD_ONE,
+        FIELD_TWO,
+        QUERY_STATE,
+        PAID_STATE)
+        values (
+        #{businessType},
+        #{businessId},
+        #{paymentTypeId},
+        #{paymentNo},
+        #{paymentFee},
+        #{paidFee},
+        #{paymentTime},
+        #{memberId},
+        #{backNo},
+        #{backTime},
+        #{backState},
+        #{backNotes},
+        #{isDelete},
+        #{addUserId},
+        #{addTime},
+        #{editUserId},
+        #{editTime},
+        #{channel},
+        #{returnUrl},
+        #{cardNo},
+        #{reqTxnTime},
+        #{openId},
+        #{fieldOne},
+        #{fieldTwo},
+        #{queryState},
+        #{paidState}
+        )
+    </insert>
+    <!--修改订单支付日志-->
+    <update id="updateOrderPaymentLog" parameterType="cn.com.dubbo.model.OrderPaymentLog">
+        update order_payment_log
+        <set>
+            <if test="businessType != null and  businessType !=''">
+                BUSINESS_TYPE = #{businessType},
+            </if>
+            <if test="businessId != null and  businessId !=''">
+                BUSINESS_ID = #{businessId},
+            </if>
+            <if test="paymentTypeId != null and paymentTypeId  !=''">
+                PAYMENT_TYPE_ID = #{paymentTypeId},
+            </if>
+            <if test="paymentNo != null and  paymentNo !=''">
+                PAYMENT_NO = #{paymentNo},
+            </if>
+            <if test="paymentFee != null and  paymentFee !=''">
+                PAYMENT_FEE = #{paymentFee},
+            </if>
+            <if test="paidFee != null and  paidFee !=''">
+                PAID_FEE = #{paidFee},
+            </if>
+            <if test="paymentTime != null and paymentTime  !=''">
+                PAYMENT_TIME =#{paymentTime},
+            </if>
+            <if test="memberId != null and  memberId !=''">
+                MEMBER_ID = #{memberId},
+            </if>
+            <if test="backNo != null and  backNo !=''">
+                BACK_NO = #{backNo},
+            </if>
+            <if test="backTime != null and  backTime !=''">
+                BACK_TIME = #{backTime},
+            </if>
+            <if test="backState != null and  backState !=''">
+                BACK_STATE = #{backState},
+            </if>
+            <if test="backNotes != null and  backNotes !=''">
+                BACK_NOTES = #{backNotes},
+            </if>
+            <if test="isDelete != null and  isDelete !=''">
+                IS_DELETE = #{isDelete},
+            </if>
+            <if test="addUserId != null and  addUserId !=''">
+                ADD_USER_ID = #{addUserId},
+            </if>
+            <if test="addTime != null and addTime  !=''">
+                ADD_TIME = #{addTime},
+            </if>
+            <if test="editUserId != null and editUserId  !=''">
+                EDIT_USER_ID = #{editUserId},
+            </if>
+            <if test="editTime != null and editTime  !=''">
+                EDIT_TIME = #{editTime},
+            </if>
+            <if test="channel != null and channel  !=''">
+                CHANNEL = #{channel},
+            </if>
+            <if test="returnUrl != null and returnUrl  !=''">
+                RETURN_URL = #{returnUrl},
+            </if>
+            <if test="cardNo != null and  cardNo !=''">
+                CARD_NO = #{cardNo},
+            </if>
+            <if test="reqTxnTime != null and  reqTxnTime !=''">
+                REQ_TXN_TIME = #{reqTxnTime},
+            </if>
+            <if test="openId != null and openId  !=''">
+                OPEN_ID = #{openId},
+            </if>
+            <if test="fieldOne != null and  fieldOne !=''">
+                FIELD_ONE = #{fieldOne},
+            </if>
+            <if test="fieldTwo != null and  fieldTwo !=''">
+                FIELD_TWO = #{fieldTwo},
+            </if>
+            <if test="queryState != null and  queryState !=''">
+                QUERY_STATE = #{queryState},
+            </if>
+            <if test="paidState != null and paidState  !=''">
+                PAID_STATE = #{paidState},
+            </if>
+            <if test="refundState != null and paidState  !=''">
+                REFUND_STATE = #{refundState}
+            </if>
+        </set>
+        where PAYMENT_LOG_ID = #{paymentLogId}
+    </update>
+    
+    
+    <select id="findOrderPaymentLog" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+        select ol.* from order_payment_log ol
+        where ol.IS_DELETE='N'
+        <if test="businessType != null and businessType  !=''">
+           and ol.BUSINESS_TYPE = #{businessType}
+        </if>
+        <if test="businessId != null and  businessId !=''">
+            and  ol.BUSINESS_ID = #{businessId}
+        </if>
+        <if test="paymentTypeId != null and  paymentTypeId !=''">
+            and  ol.PAYMENT_TYPE_ID = #{paymentTypeId}
+        </if>
+        <if test="paymentNo != null and paymentNo  !=''">
+            and  ol.PAYMENT_NO = #{paymentNo}
+        </if>
+        <if test="paymentLogId != null and paymentLogId  !=''">
+             and ol.PAYMENT_LOG_ID = #{paymentLogId}
+        </if>
+        order by ol.PAYMENT_LOG_ID desc  limit 1
+    </select>
+    <select id="findOrderPaymentLog0" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+        select ol.* from order_payment_log ol
+        where ol.IS_DELETE='N'
+        <if test="businessType != null and businessType  !=''">
+           and ol.BUSINESS_TYPE = #{businessType}
+        </if>
+        <if test="businessId != null and  businessId !=''">
+           and ol.BUSINESS_ID = #{businessId}
+        </if>
+        <if test="paymentNo != null and  paymentNo !=''">
+           and ol.PAYMENT_NO = #{paymentNo}
+        </if>
+        <if test="memberId != null and memberId   !=''">
+           and ol.MEMBER_ID = #{memberId}
+        </if>
+        <if test="paidState != null and paidState   !=''">
+            and ol.PAID_STATE = #{paidState}
+        </if>
+        order by ol.PAYMENT_LOG_ID desc limit 1
+    </select>
+
+    <select  id="getMaxPayTime" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+        select ol.* from order_payment_log ol where ol.IS_DELETE='N'
+        <if test="businessType != null and businessType  !=''">
+           and ol.BUSINESS_TYPE = #{businessType}
+        </if>
+        <if test="businessId != null and  businessId !=''">
+           and business_id=#{businessId} and add_time=(select max(add_time)
+            from order_payment_log WHERE business_id=#{businessId})
+        </if>
+        <if test="paymentTypeId != null and paymentTypeId  !=''">
+           and ol.PAYMENT_TYPE_ID = #{paymentTypeId}
+        </if>
+    </select>
+
+    <select id="findOrderPaymentLogForBill" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+    select  l.*
+	from order_payment_log l
+	where l.is_delete = 'N'
+      	and l.payment_type_id = #{paymentTypeId}
+      	and l.back_state = #{backState}
+      	and to_char(to_date(l.edit_time,'yyyy-mm-dd hh24:mi:ss'),'yyyymmdd') = #{editTime}
+    order by l.edit_time desc
+   </select>
+
+
+    <select id="findOrderPaymentLogForAccount" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+    select  l.*
+	from order_payment_log l
+	where l.is_delete = 'N'
+		and l.paid_fee is not null
+		and l.back_no is not null
+        <if test="businessType != null and businessType  !=''">
+          and  l.BUSINESS_TYPE = #{businessType}
+        </if>
+        <if test="businessId != null and businessId  !=''">
+           and l.BUSINESS_ID = #{businessId}
+        </if>
+        <if test="fieldTwo != null and fieldTwo  !=''">
+           and l.FIELD_TWO is null or l.FIELD_TWO = #{fieldTwo}
+        </if>
+        <if test="paymentTypeId != null and paymentTypeId  !=''">
+           and l.PAYMENT_TYPE_ID != 81
+        </if>
+   </select>
+
+    <!--统计总的支付金额时候，要加上退款状态的查询条件；防止有记录但是第三方返回失败 -->
+    <select id="getPaidFeeSumByLog" resultType="Double" parameterType="cn.com.dubbo.model.OrderPaymentLog">
+    select sum(g.payment_fee)
+    from order_payment_log g
+    where g.business_type = #{businessType}
+          and g.business_id = #{businessId}
+          AND g.paid_state IN  ('Y','P')
+    group by g.business_id
+    </select>
+
+    <select id="getPaidOrderInfo" resultType="cn.com.dubbo.model.OrderPaymentLog" parameterType="cn.com.dubbo.model.OrderPaymentLog">
+        select g.business_id as businessId,
+               g.member_id as memberId,
+               sum(g.paid_fee)  as paidFee
+        from order_payment_log g
+        where 1=1
+        and (g.paid_state != 'N' or g.paid_fee is not null)
+        and g.business_type = #{businessType}
+        <if test="startTime != null and startTime  !=''">
+          and  to_char(to_date(g.edit_time,'yyyy-MM-dd hh24:mi:ss'),'yyyy-MM-dd hh24:mi:ss') &gt;= to_char(to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss'),'yyyy-MM-dd hh24:mi:ss')
+       </if>
+        <if test="endTime != null and endTime  !=''">
+          and  to_char(to_date(g.edit_time,'yyyy-MM-dd hh24:mi:ss'),'yyyy-MM-dd hh24:mi:ss') &lt;= to_char(to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss'),'yyyy-MM-dd hh24:mi:ss')
+       </if>
+        group by g.member_id,g.business_id,g.edit_time
+        order by g.business_id desc
+
+    </select>
+
+    <select id="getSimilarOrderPaymentLog" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+        select *
+        from order_payment_log
+        where is_delete = 'N'
+       <if test="backNo!= null and backNo  !=''">
+            <![CDATA[and BACK_NO=#{backNo} ]]>
+       </if>
+       <if test="paidState!= null and paidState  !=''">
+            <![CDATA[and PAID_STATE=#{paidState# ]]>
+       </if>
+       <if test="addUserId!= null and addUserId  !=''">
+            <![CDATA[and ADD_USER_ID=#{addUserId# ]]>
+       </if>
+       <if test="backTime!= null and  backTime !=''">
+            <![CDATA[and BACK_TIME=#{backTime# ]]>
+       </if>
+       <if test="paidFee!= null and paidFee  !=''">
+            <![CDATA[and PAID_FEE=#{paidFee# ]]>
+       </if>
+       <if test="memberId!= null and memberId  !=''">
+            <![CDATA[and MEMBER_ID=#{memberId# ]]>
+       </if>
+       <if test="fieldTwo!= null and fieldTwo  !=''">
+            <![CDATA[and FIELD_TWO=#{fieldTwo# ]]>
+       </if>
+       <if test="editUserId!= null and  editUserId !=''">
+            <![CDATA[and EDIT_USER_ID=#{editUserId# ]]>
+       </if>
+       <if test="backState!= null and  backState!=''">
+            <![CDATA[and BACK_STATE=#{backState# ]]>
+       </if>
+       <if test="cardNo!= null and cardNo  !=''">
+            <![CDATA[and CARD_NO=#{cardNo# ]]>
+       </if>
+       <if test="paymentLogId!= null and paymentLogId !=''">
+            <![CDATA[and PAYMENT_LOG_ID=#{paymentLogId# ]]>
+       </if>
+       <if test="backNotes!= null and backNotes  !=''">
+            <![CDATA[and BACK_NOTES=#{backNotes# ]]>
+       </if>
+       <if test="reqTxnTime!= null and reqTxnTime !=''">
+            <![CDATA[and REQ_TXN_TIME=#{reqTxnTime# ]]>
+       </if>
+       <if test="businessId!= null and  businessId!=''">
+            <![CDATA[and BUSINESS_ID=#{businessId# ]]>
+       </if>
+       <if test="paymentFee!= null and paymentFee !=''">
+            <![CDATA[and PAYMENT_FEE=#{paymentFee# ]]>
+       </if>
+       <if test="editTime!= null and editTime!=''">
+            <![CDATA[ and EDIT_TIME=#{editTime# ]]>
+       </if>
+       <if test="queryState!= null and queryState!=''">
+            <![CDATA[ and QUERY_STATE=#{queryState# ]]>
+       </if>
+       <if test="paymentTime!= null and  paymentTime !=''">
+            <![CDATA[ and PAYMENT_TIME=#{paymentTime# ]]>
+       </if>
+       <if test="isDelete!= null and isDelete!=''">
+            <![CDATA[ and IS_DELETE=#{isDelete# ]]>
+       </if>
+       <if test="returnUrl!= null and returnUrl !=''">
+            <![CDATA[ and RETURN_URL=#{returnUrl# ]]>
+       </if>
+       <if test="addTime!= null and addTime !=''">
+            <![CDATA[ and ADD_TIME=#{addTime# ]]>
+       </if>
+       <if test="fieldOne!= null and fieldOne!=''">
+            <![CDATA[ and FIELD_ONE=#{fieldOne# ]]>
+       </if>
+       <if test="channel!= null and channel!=''">
+            <![CDATA[ and CHANNEL=#{channel# ]]>
+       </if>
+       <if test="paymentNo!= null and  paymentNo!=''">
+            <![CDATA[ and PAYMENT_NO=#{paymentNo# ]]>
+       </if>
+       <if test="businessType!= null and businessType!=''">
+            <![CDATA[ and BUSINESS_TYPE=#{businessType# ]]>
+       </if>
+       <if test="openId!= null and openId!=''">
+            <![CDATA[ and OPEN_ID=#{openId# ]]>
+       </if>
+       <if test="paymentTypeId!= null and paymentTypeId!=''">
+            <![CDATA[ and PAYMENT_TYPE_ID=#{paymentTypeId# ]]>
+       </if>
+    </select>
+    
+    <select  id="getCountOrderPaymentLog" parameterType="java.lang.String" resultType="Integer">
+        select count(*) from order_payment_log ol where ol.IS_DELETE='N' and business_id=#{businessId} 
+    </select>
+
+    <select id="queryRefundOrder" parameterType="cn.com.dubbo.model.OrderPaymentLog" resultMap="OrderPaymentLogResult">
+        select  l.*
+        from order_payment_log l
+        where l.refund_state = '0'
+        and l.business_type = 'refund'
+        and l.back_no is not NULL
+        and l.paid_state = 'Y'
+        order by l.edit_time desc
+    </select>
+
+</mapper>

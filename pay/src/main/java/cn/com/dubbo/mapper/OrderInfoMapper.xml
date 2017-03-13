@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dubbo.mapper.OrderInfoMapper" >
+
+	<resultMap id="orderInfoResult" type="cn.com.dubbo.model.OrderInfo">
+		<result column="order_no" property="orderNo" javaType="String" />
+		<result column="member_id" property="memberId" />
+		<result column="is_pay" property="isPaid" />
+		<result column="payment_type" property="paymentMode" />
+		<result column="payment_type_id" property="paymentTypeId" />
+		<result column="payment_no" property="paymentNo" />
+		<result column="paid_time" property="paidTime" />
+		<result column="order_status" property="orderState" />
+		<result column="sku_fee" property="skuFee" />
+		<result column="activity_discount_fee" property="discountFee" />
+		<result column="order_points" property="orderPoints" />
+		<result column="order_vouchers" property="orderVouchers" />
+		<result column="other_discount_fee" property="otherDiscounts" />
+		<result column="delivery_fee" property="deliveryFee" />
+		<result column="order_fee" property="orderFee" />
+		<result column="paid_fee" property="paidFee" />
+		<result column="receive_user" property="receiveUser" />
+		<result column="province_id" property="provinceId" />
+		<result column="city_id" property="cityId" />
+		<result column="area_id" property="areaId" />
+		<result column="receive_address" property="receiveAddress" />
+		<result column="receive_full_address" property="receiveFullAddress" />
+		<result column="receive_post" property="receivePost" />
+		<result column="receive_tel" property="receiveTel" />
+		<result column="receive_mobile" property="receiveMobile" />
+		<result column="order_pay_fee" property="orderPayFee" />
+		<result column="code_no" property="codeNo"/>
+		<result column="have_cfy" property="haveCfy"/>
+	</resultMap>
+	
+	<resultMap id="orderItemResult" type="cn.com.dubbo.model.OrderItem">
+        <result column="ORDER_ITEM_ID" property="orderItemId" />
+        <result column="ORDER_NO" property="orderNo" />
+        <result column="GOODS_TYPE" property="goodsType" />
+        <result column="GOODS_ID" property="goodsId" />
+        <result column="GOODS_NO" property="goodsNo" />
+        <result column="GOODS_NAME" property="goodsName" />
+        <result column="GOODS_UNIT" property="goodsUnit" />
+        <result column="GOODS_OLD_PRICE" property="goodsOldPrice" />
+        <result column="GOODS_PRICE" property="goodsPrice" />
+        <result column="GOODS_AMOUNT" property="goodsAmount" />
+        <result column="GOODS_SUM_FEE" property="goodsSumFee" />
+    </resultMap>
+    
+    <resultMap type="cn.com.dubbo.model.OrderItem" id="orderItemPayTypeResult" extends="orderItemResult">
+    	<result column="type_no" property="typeNo" />
+    </resultMap>
+	
+	<select id="getOrderById" parameterType="String" resultMap="orderInfoResult">
+		select
+			oi.order_no,
+			oi.member_id,
+			oi.is_pay,
+			oi.payment_type,
+			oi.payment_type_id,
+			oi.payment_no,
+			oi.paid_time,
+			oi.order_status,
+			oi.sku_fee,
+			oi.activity_discount_fee,
+			oi.order_points,
+			oi.order_vouchers,
+			oi.other_discount_fee,
+			oi.delivery_fee,
+			oi.order_fee,
+			oi.paid_fee,
+			oi.receive_user,
+			oi.province_id,
+			oi.city_id,
+			oi.area_id,
+			oi.receive_address,
+			oi.receive_full_address,
+			oi.receive_post,
+			oi.receive_tel,
+			oi.receive_mobile,
+			oi.order_pay_fee,
+			oi.have_cfy,
+			(select s.CODE_NO from sys_code s where s.code_id = oi.order_status) as "code_no"
+		from
+		order_info oi
+		where
+		oi.order_no=#{value} and
+		oi.is_delete='N'
+	</select>
+	
+	<update id="update" parameterType="cn.com.dubbo.model.OrderInfo">
+		update order_info
+		<set>
+				is_pay = #{isPaid},
+				payment_type_id = #{paymentId},
+			<if test="paymentTypeId = null">
+				<if test="paymentTypeNo != null and  paymentTypeNo !=''">
+					payment_type_id = (select
+					ept.payment_type_id from ec_payment_type ept where
+					ept.is_delete =
+					'N' and ept.payment_type_no = #{paymentTypeNo}),
+				</if>
+			</if>
+				payment_no = #{paymentNo},
+				paid_time = #{paidTime},
+			<if test="offlinePaidUserId != null and offlinePaidUserId  !=''">
+				OFFLINE_PAID_USER_ID =
+				#{offlinePaidUserId},
+			</if>
+			<if test="orderState != null and orderState  !=''">
+				order_status = #{orderState},
+			</if>
+				paid_fee = #{paidFee},
+				order_pay_fee =	#{orderPayFee}
+		</set>
+		where order_no = #{orderNo}
+	</update>
+	
+	<select id="countValidateOrder" resultType="Integer"
+		parameterType="java.util.Map">
+		select count(0) from order_info o where o.order_no =
+		#{orderNo} and
+		o.member_id = #{memberId}
+	</select>
+	
+	<insert id="saveOrderLog" parameterType="cn.com.dubbo.model.OrderLog">
+        insert into order_log ( order_no, order_state_id, log_content, log_time,
+            log_user_id, add_user_id, add_time,order_log_type
+            )
+        values ( #{orderId}, #{orderStateId}, #{logContent}, #{logTime}, #{logUserId},#{addUserId},#{addTime},#{orderLogType})
+    </insert>
+    
+    <select id="getItemsByOrderId" parameterType="String" resultMap="orderItemResult">
+    	select oit.order_item_id,
+			oit.order_no,
+			oit.goods_type,
+			oit.goods_id,
+			oit.goods_no,
+			oit.goods_name,
+			oit.goods_unit,
+			oit.goods_old_price,
+			oit.goods_price,
+			oit.goods_amount,
+			oit.goods_sum_fee
+		from order_item oit
+		where  oit.is_delete='N' and oit.order_no=#{value}
+    </select>
+    
+    <select id="getItemsByPay" parameterType="java.util.Map" resultMap="orderItemPayTypeResult">
+    	select oit.order_item_id,
+			oit.order_no,
+			oit.goods_type,
+			oit.goods_id,
+			oit.goods_no,
+			oit.goods_name,
+			oit.goods_unit,
+			oit.goods_old_price,
+			oit.goods_price,
+			oit.goods_amount,
+			oit.goods_sum_fee,
+			(select type_no from pay_type pt where pt.payment_type_no =#{paymentType} and pt.goods_no = oit.goods_no) as type_no
+		from order_item oit
+		where  oit.is_delete='N' and oit.order_no=#{orderNo}
+    </select>
+</mapper>

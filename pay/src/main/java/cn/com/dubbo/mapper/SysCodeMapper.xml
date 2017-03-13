@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.dubbo.mapper.SysCodeMapper" >
+
+	<resultMap id="CodeRslt" type="com.jiuyao.ec.common.model.SysCode">
+		<result column="code_id" property="codeId" />
+        <result column="code_type_no" property="codeTypeNo" />
+        <result column="code_order" property="codeOrder" />
+        <result column="code_no" property="codeNo" />
+        <result column="code_value" property="codeValue" />
+        <result column="is_delete" property="isDelete" />
+        <result column="add_time" property="addTime" />
+        <result column="add_user_id" property="addUserId" />
+        <result column="edit_time" property="editTime" />
+        <result column="edit_user_id" property="editUserId" />
+        <result column="code_notes" property="codeNotes"/>
+	</resultMap>
+
+  <select id="getCodesByTypeNo" parameterType="java.lang.String" resultMap="CodeRslt">
+        select * from sys_code  
+ 		where 1=1  
+ 		and is_delete = 'N'
+		and code_type_no=#{codeTypeNo}
+ 		order by code_order asc 
+	</select>
+	
+	<select id="findCode" parameterType="com.jiuyao.ec.common.model.SysCode" resultMap="CodeRslt">
+    	select * from sys_code
+    	where 1=1
+		<if  test="codeTypeNo!= null and  codeTypeNo !=''">
+ 			and code_type_no=#{codeTypeNo}
+		</if>
+		<if  test="codeOrder!= null and codeOrder  !=''">
+ 			and code_order=#{codeOrder}
+		</if>
+		<if  test="codeNo!= null and  codeNo !=''">
+ 			and code_no=#{codeNo}
+		</if>
+		<if  test="codeValue!= null and codeValue  !=''">
+ 			and code_value=#{codeValue}
+		</if>
+		<if  test="codeNotes!= null and codeNotes  !=''">
+ 			and code_notes=#{codeNotes}
+		</if>
+		<if  test="isDelete!= null and isDelete  !=''">
+ 			and is_delete=#{isDelete}
+		</if>
+		<if  test="addTime!= null and addTime  !=''">
+ 			and add_time=#{addTime}
+		</if>
+		<if  test="addUserId!= null and  addUserId !=''">
+ 			and add_user_id=#{addUserId}
+		</if>
+		<if  test="editTime!= null and  editTime !=''">
+ 			and edit_time=#{editTime}
+		</if>
+		<if  test="editUserId!= null and editUserId  !=''">
+ 			and edit_user_id=#{editUserId}
+		</if>
+		<if  test="codeId!= null and  codeId !=''">
+ 			and code_id=#{codeId}
+		</if>
+		order by code_order
+	</select>
+	
+</mapper>
