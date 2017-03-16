@@ -47,7 +47,7 @@ public void testRefund() throws Exception {
 
 
 
-    String oldPaymentNo = "1023212227186688"; //订单号
+    String oldPaymentNo = "1168420103032832"; //订单号
    //String paymentNo ="pingan";//类型
    String refundAmt ="0.01";//退款金额
    OrderPaymentLog orderPaymentLog = new OrderPaymentLog();

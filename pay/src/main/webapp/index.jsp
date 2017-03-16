@@ -6,11 +6,11 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmss");   
 String date= format.format(new Date());
-	//String sig = "businessType=order&channel=ios&commitTime="+date+"&memberId=262&orderId=1137499053314048&paymentFee=0.01&paymentTypeNo=ehking&returnUrl=http://118.187.58.130:8086/pay";
-	String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=253&orderId=1025922322665472&paymentFee=0.01&paymentTypeNo=wxpay&returnUrl=http://118.187.58.130:8086/pay";
+	String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=320&orderId=1168419203420160&paymentFee=0.01&paymentModeCode=BANK_CARD-B2C-CMBCHINA-P2P&paymentTypeNo=ehking&returnUrl=http://118.187.58.130:8086/pay";
+	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=168&orderId=1020083348262912&paymentFee=0.01&paymentTypeNo=wxpay&returnUrl=http://118.187.58.130:8086/pay";
 	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=62&orderId=1157391436861440&paymentFee=0.01&paymentTypeNo=weixin&returnUrl=http://118.187.58.130:8086/pay&trade_type=JSAPI";
 	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=259&orderId=1021756757233664&paymentFee=0.01&paymentTypeNo=wxpay&returnUrl=http://118.187.58.130:8086/pay";
-	 // String sig ="businessType=order&channel=ios&commitTime=20170210160210&memberId=482&orderId=1122083245330432&paymentFee=536.00&paymentModeCode=BANK_CARD-B2C-CMBC-P2P&paymentTypeNo=ehking";
+	 // String sig ="businessType=order&channel=ios&commitTime=20170210160210&memberId=482&orderId=1122083245330432&paymentFee=536.00&paymentModeCode=BANK_CARD-B2C-CMBCHINA-P2P&paymentTypeNo=ehking";
 		// String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=168&orderId=1021763592507392&paymentFee=0.01&paymentTypeNo=alipay&returnUrl=http://118.187.58.130:8086/pay";
 	String sign = Md5Encrypt.md5(sig+"4N8x32");
 %>
@@ -36,16 +36,15 @@ String date= format.format(new Date());
      	<table>
      		<tr>
      			<td>orderId</td>
-     			<td><input type="text" value="1025922322665472" name="orderId"/></br>
-     				<input type="text" value="wxpay" name="paymentTypeNo"/></br>
+     			<td><input type="text" value="1168419203420160" name="orderId"/></br>
+     				<input type="text" value="ehking" name="paymentTypeNo"/></br>
      				<input type="text" value="order" name="businessType"/></br>
      				<input type="text" value="pc" name="channel"/></br>
      				<input type="text" value="http://118.187.58.130:8086/pay" name="returnUrl"/></br>
      				<input type="text" value="<%=date%>" name="commitTime">
 			<%--		<input type="text" value="JSAPI" name="trade_type">--%>
 				<%--	<input type="text" value="oN9750NoaidaUuTQHo9nlN0OJ-iY" name="openid">--%>
-					<%--<input type="text" value="BANK_CARD-B2C-CMBCHINA-P2P" name="paymentModeCode"/></br>
---%>
+					<input type="text" value="BANK_CARD-B2C-CMBCHINA-P2P" name="paymentModeCode"/></br>
 					<%--//ehk参数S
                     <input type="text" value="iphone" name="name"/></br>
                         <input type="text" value="1" name="quantity"/></br>
@@ -56,7 +55,7 @@ String date= format.format(new Date());
      		</tr>
      		<tr>
      			<td>memberId</td>
-     			<td><input type="text" value="253" name="memberId"/></td>
+     			<td><input type="text" value="320" name="memberId"/></td>
      		</tr>
      		<tr>
      			<td>paymentFee</td>

@@ -1,10 +1,7 @@
 package cn.com.dubbo.service.payment.platform;
 
 import cn.com.dubbo.excption.EhkException;
-import cn.com.dubbo.model.EcPaymentType;
-import cn.com.dubbo.model.OrderItem;
-import cn.com.dubbo.model.OrderPaymentLog;
-import cn.com.dubbo.model.OrderPaymentMessageLog;
+import cn.com.dubbo.model.*;
 import cn.com.dubbo.service.payment.constant.Constants;
 import cn.com.jiuyao.pay.common.util.DateUtils;
 import cn.com.jiuyao.pay.common.util.MathUtil;
@@ -58,6 +55,17 @@ public class Ehking extends PlatformPayment implements Platform{
                 return  null;
             }
 
+            //如果只有一件商品 并且是0元购，则继续；负责取消次商品
+            if (orderItemList.size() > 1) {
+                Iterator<OrderItem> itemIterator = orderItemList.iterator();
+                while (itemIterator.hasNext()){
+                    OrderItem orderItem = itemIterator.next();
+                    if (orderItem.getGoodsPrice().compareTo(BigDecimal.ZERO) == 0){
+                        itemIterator.remove();
+                    }
+                }
+            }
+
             String paymentNo=orderPaymentLog.getPaymentNo();
             OrderPaymentMessageLog messageLog=new OrderPaymentMessageLog();
             messageLog.setPaymentLogId(orderPaymentLog.getPaymentLogId());
@@ -69,13 +77,22 @@ public class Ehking extends PlatformPayment implements Platform{
             listForSign.add(notifyUrl);
             listForSign.add(callbackUrl);
             if (StringUtils.isNotEmpty(paymentModeCode)){
-                listForSign.add(paymentModeCode);//通过支付方式编码实现直连支付方式
+                listForSign.add(paymentModeCode); //通过支付方式编码实现直连支付方式
             }
-
+            OrderInfo orderInfo = orderService.findOrderById(requestId); //获取订单信息信息
+            if (orderInfo.getDeliveryFee().compareTo(BigDecimal.ZERO) == 0 && orderPaymentLog.getPaidFee().compareTo(BigDecimal.ZERO) == 0){
+                logger.error("order freight free and paymentFee is free , orderNo " + requestId);
+                return null;
+            }
             for (OrderItem orderItem : orderItemList){
                 listForSign.add(orderItem.getGoodsName());//商品名称
-                listForSign.add(orderItem.getGoodsAmount().toString());//商品数量
-                listForSign.add(MathUtil.changeY2F(orderItem.getGoodsPrice()).toString());//商品成交价  注意单位是分
+                listForSign.add(orderItem.getGoodsAmount().toString()); //商品数量
+                //注意：有可能出现0元购 但是只能购买一件0元购商品 如果商品列表有为0的 此时使用运费
+                if (orderItem.getGoodsPrice().compareTo(BigDecimal.ZERO) == 1){
+                    listForSign.add(MathUtil.changeY2F(orderItem.getGoodsPrice()).toString()); //商品成交价  注意单位是分
+                }else{
+                    listForSign.add(MathUtil.changeY2F(orderInfo.getDeliveryFee()).toString());  //商品成交价  注意单位是分
+                }
             }
             String ehkKey=map.get("ehkKey");//商户秘钥 获取hmac
             String key=this.hmacList(listForSign, ehkKey);//获取签名算法
@@ -98,7 +115,11 @@ public class Ehking extends PlatformPayment implements Platform{
                 Map<String,String> product=new LinkedHashMap<String, String>();
                 product.put("name",orderItem.getGoodsName());
                 product.put("quantity",orderItem.getGoodsAmount().toString());
-                product.put("amount",MathUtil.changeY2F(orderItem.getGoodsPrice()).toString());
+                if (orderItem.getGoodsPrice().compareTo(BigDecimal.ZERO) == 1){
+                    product.put("amount", MathUtil.changeY2F(orderItem.getGoodsPrice()).toString());
+                }else{
+                    product.put("amount", MathUtil.changeY2F(orderInfo.getDeliveryFee()).toString());
+                }
                 productDetails.add(product);
             }
             jsonObject.put("productDetails",productDetails);
@@ -229,7 +250,6 @@ public class Ehking extends PlatformPayment implements Platform{
             if (!StringUtils.isEmpty(isCheck)) {
                 return isCheck;
             }
-
             String md5=this.hmacMap(mapParam,ehkKey);
             if (hmac.equals(md5)){
                 doSaveResultByLog(orderPaymentLog);
@@ -351,13 +371,12 @@ public class Ehking extends PlatformPayment implements Platform{
             String resHmac=responseData.get("hmac").toString();
             String countHmac=this.hmacMap(map,ehkKey);
             if (!resHmac.equals(countHmac)){
-                responseData.put("code","0001");
+                refundMap.put("code","0001");
                 logger.error("hmac is not match");
-                throw  new EhkException("errorMessage:hmac is not match ");
+                return refundMap;
             }
-            responseData.put("code","0000");
+            refundMap.put("code","0000");
         }
-        //refundMap.put("result",responseData == null ? "1000" :responseData.toString());
         return refundMap;
     }
 

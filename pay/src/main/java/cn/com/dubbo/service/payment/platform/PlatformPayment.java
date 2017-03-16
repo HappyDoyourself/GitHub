@@ -4,6 +4,7 @@ import cn.com.dubbo.model.EcPaymentType;
 import cn.com.dubbo.model.OrderPaymentLog;
 import cn.com.dubbo.model.OrderPaymentMessageLog;
 import cn.com.dubbo.model.OrderPaymentTypeList;
+import cn.com.dubbo.redis.CacheUtil;
 import cn.com.dubbo.service.MyPayService;
 import cn.com.dubbo.service.OrderService;
 import cn.com.dubbo.service.impl.BaseServiceImpl;
@@ -54,7 +55,8 @@ public class PlatformPayment extends BaseServiceImpl implements Platform {
 	protected OrderService orderService;
 	@Autowired
 	protected SystemService systemService;
-	
+	@Autowired
+	protected CacheUtil cacheUtil;
 	@Override
 	public String requestMessagePackage(HttpServletRequest request,
 			HttpServletResponse response,OrderPaymentLog orderPaymentLog) {

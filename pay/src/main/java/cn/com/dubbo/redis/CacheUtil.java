@@ -3,12 +3,14 @@ package cn.com.dubbo.redis;
 import org.apache.log4j.Logger;
 
 import cn.com.jiuyao.pay.common.util.SerializeUtil;
+import org.springframework.stereotype.Service;
 
 /**
  * 客户端调用的<br/>
  * 操作key -- value 的方法
  *
  */
+@Service
 public class CacheUtil {
 
 	private static final Logger log = Logger.getLogger(CacheUtil.class);
