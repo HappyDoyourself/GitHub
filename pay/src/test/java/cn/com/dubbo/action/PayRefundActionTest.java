@@ -3,13 +3,12 @@ package cn.com.dubbo.action;
 import cn.com.dubbo.model.OrderPaymentLog;
 import cn.com.dubbo.service.MyPayService;
 import cn.com.jiuyao.pay.common.util.HttpClientTools;
-import cn.com.jiuyao.util.IPUtil;
 import cn.com.jiuyao.util.payments.alipay.config.AlipayConfig;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.junit.Test;
-import org.junit.Before; 
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -47,7 +46,8 @@ public void testRefund() throws Exception {
 
 
 
-    String oldPaymentNo = "1168420103032832"; //订单号
+    String oldPaymentNo = "1170151659311104"; //订单号
+    System.out.println(oldPaymentNo);
    //String paymentNo ="pingan";//类型
    String refundAmt ="0.01";//退款金额
    OrderPaymentLog orderPaymentLog = new OrderPaymentLog();

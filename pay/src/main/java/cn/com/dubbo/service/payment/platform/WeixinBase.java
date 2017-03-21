@@ -1,36 +1,28 @@
 package cn.com.dubbo.service.payment.platform;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
+import cn.com.dubbo.model.EcPaymentType;
+import cn.com.dubbo.model.OrderPaymentLog;
 import cn.com.dubbo.model.PaymentResult;
+import cn.com.dubbo.model.WeixinPay;
 import cn.com.jiuyao.pay.common.constant.ResponseCodeConstants;
-import cn.com.jiuyao.pay.common.util.*;
-import com.alibaba.fastjson.JSON;
+import cn.com.jiuyao.pay.common.util.HttpClientUtils;
+import cn.com.jiuyao.pay.common.util.HttpsClientUtils;
+import cn.com.jiuyao.pay.common.util.MathUtil;
+import cn.com.jiuyao.util.IPUtil;
+import cn.com.jiuyao.util.payments.weixin.*;
 import com.alibaba.fastjson.JSONObject;
 import org.jdom.JDOMException;
 import org.jdom.input.JDOMParseException;
 import org.springframework.stereotype.Service;
 
-import cn.com.dubbo.model.EcPaymentType;
-import cn.com.dubbo.model.OrderPaymentLog;
-import cn.com.dubbo.model.WeixinPay;
-import cn.com.jiuyao.util.IPUtil;
-import cn.com.jiuyao.util.payments.weixin.HttpClientUtil;
-import cn.com.jiuyao.util.payments.weixin.ResponseHandler;
-import cn.com.jiuyao.util.payments.weixin.TenpayUtil;
-import cn.com.jiuyao.util.payments.weixin.WXUtil;
-import cn.com.jiuyao.util.payments.weixin.XMLUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 微信支付基础类
@@ -229,7 +221,7 @@ public class WeixinBase extends PlatformPayment{
 		Map<String, String> parameter =  orderPaymentLog.getEcPaymentTypeParames();
 		String appId = parameter.get("appId"); //商户号
 		String mch_id = parameter.get("mch_id"); //商户号
-		String noncestr = TenpayUtil.getNonceStr(); //随机字符串
+		String nonce_str = TenpayUtil.getNonceStr(); //随机字符串
 		//String out_trade_no = orderPaymentLog.getOrderPaymentLog().getPaymentNo();//商户订单号
 		String out_trade_no = orderPaymentLog.getBusinessId().toString(); //商户订单号
 		String transaction_id = orderPaymentLog.getOrderPaymentLog().getBackNo(); //财付通订单号
@@ -242,7 +234,7 @@ public class WeixinBase extends PlatformPayment{
 		Map mapPara = new LinkedHashMap();
 		mapPara.put("appid", appId);
 		mapPara.put("mch_id", mch_id);
-		mapPara.put("noncestr", noncestr);
+		mapPara.put("nonce_str", nonce_str);
 		mapPara.put("op_user_id", op_user_id);
 		mapPara.put("out_refund_no", out_refund_no);
 		mapPara.put("out_trade_no", out_trade_no);

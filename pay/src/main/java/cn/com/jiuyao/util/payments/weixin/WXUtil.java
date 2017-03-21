@@ -2,9 +2,6 @@ package cn.com.jiuyao.util.payments.weixin;
 
 import org.jdom.JDOMException;
 
-import cn.com.dubbo.model.OrderPaymentLog;
-import cn.com.jiuyao.util.payments.alipay.Payment;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -101,6 +98,43 @@ public class WXUtil {
 		String sign = MD5Util.MD5Encode(prestr.toString(), "utf-8").toUpperCase();
 		return sign;
 	}
+
+
+
+	/**
+	 * 按参数首字母排序获取签名
+	 * @param m
+	 * @param appKey
+	 * @return
+	 * @throws IOException
+	 * @throws JDOMException
+	 */
+	public static String sha1Sign(Map m)throws IOException, JDOMException{
+		List keys = new ArrayList(m.keySet());
+		Collections.sort(keys);
+
+		StringBuffer prestr = new StringBuffer();
+
+		boolean first = true;
+		for (int i = 0; i < keys.size(); i++) {
+			String key = (String) keys.get(i);
+			String value = (String) m.get(key);
+			if (value == null || value.trim().length() == 0 || "sign".equals(key)) {
+				continue;
+			}
+			if (first) {
+				prestr.append(key + "=" + value) ;
+				first = false;
+			} else {
+				prestr.append("&" + key + "=" + value) ;
+			}
+		}
+
+		String sign = Sha1Util.getSha1(prestr.toString()).toUpperCase();
+		return sign;
+	}
+
+
 
 	/**
 	 * 是否微信签名,规则是:按参数名称a-z排序,遇到空值的参数不参加签名。

@@ -16,5 +16,13 @@ public class Test {
         for (String set :map.keySet()){
             System.out.println(set);
         }
+
+
+
+        String url ="http://localhost:8080?param=value#afss";
+        System.out.println(url);
+        if (url.contains("#")){
+            System.out.println(url.substring(0,url.indexOf("#")));
+        }
     }
 }

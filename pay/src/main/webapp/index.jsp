@@ -6,8 +6,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmss");   
 String date= format.format(new Date());
-	String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=320&orderId=1168419203420160&paymentFee=0.01&paymentModeCode=BANK_CARD-B2C-CMBCHINA-P2P&paymentTypeNo=ehking&returnUrl=http://118.187.58.130:8086/pay";
-	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=168&orderId=1020083348262912&paymentFee=0.01&paymentTypeNo=wxpay&returnUrl=http://118.187.58.130:8086/pay";
+	String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=203&orderId=1171315755438080&paymentFee=0.01&paymentModeCode=BANK_CARD-B2C-CMBCHINA-P2P&paymentTypeNo=ehking&returnUrl=http://118.187.58.130:8086/pay";
+	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=369&orderId=1171315755438080&paymentFee=0.01&paymentTypeNo=wxpay&returnUrl=http://118.187.58.130:8086/pay";
 	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=62&orderId=1157391436861440&paymentFee=0.01&paymentTypeNo=weixin&returnUrl=http://118.187.58.130:8086/pay&trade_type=JSAPI";
 	//String sig = "businessType=order&channel=pc&commitTime="+date+"&memberId=259&orderId=1021756757233664&paymentFee=0.01&paymentTypeNo=wxpay&returnUrl=http://118.187.58.130:8086/pay";
 	 // String sig ="businessType=order&channel=ios&commitTime=20170210160210&memberId=482&orderId=1122083245330432&paymentFee=536.00&paymentModeCode=BANK_CARD-B2C-CMBCHINA-P2P&paymentTypeNo=ehking";
@@ -36,7 +36,7 @@ String date= format.format(new Date());
      	<table>
      		<tr>
      			<td>orderId</td>
-     			<td><input type="text" value="1168419203420160" name="orderId"/></br>
+     			<td><input type="text" value="1171315755438080" name="orderId"/></br>
      				<input type="text" value="ehking" name="paymentTypeNo"/></br>
      				<input type="text" value="order" name="businessType"/></br>
      				<input type="text" value="pc" name="channel"/></br>
@@ -55,7 +55,7 @@ String date= format.format(new Date());
      		</tr>
      		<tr>
      			<td>memberId</td>
-     			<td><input type="text" value="320" name="memberId"/></td>
+     			<td><input type="text" value="203" name="memberId"/></td>
      		</tr>
      		<tr>
      			<td>paymentFee</td>
