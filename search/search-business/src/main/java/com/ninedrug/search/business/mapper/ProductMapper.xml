@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ninedrug.search.business.mapper.ProductMapper">
+
+	<!-- findAll -->
+    <select id="getProductListPage" resultType="productModel" parameterType="productModel">
+         select 
+			main.product_id as productId,
+			main.pro_catalog_id as proCatalogId,
+		    main.product_name as productName,
+		    ifnull(main.product_desc,'') as productDesc,
+		    truncate(main.ec_price,2)  as ecPrice,
+		    main.ec_price  as minPrice,
+		    main.ec_price  as maxPrice,
+		    ifnull(main.package_standard,'') as packageStandard,
+		    main.product_brand_id as productBrandId,
+		    ifnull(main.available_stock,0) as availableStock,
+		    ifnull(main3.product_brand_name,'') as productBrandName,
+		    ifnull(main2.image_url,'') as imageUrl
+		from product main
+		left join (
+		select * from product_img mm 
+		where  mm.image_order = 0 
+		) main2
+		on main.product_id = main2.product_id
+		inner join product_brand main3
+		on main.product_brand_id = main3.product_brand_id
+		where main.is_delete = 'N'
+		and main.is_onsale = 'Y'
+		<if test="productIds != null and productIds != '' ">
+			and main.product_id in 
+			<foreach collection="productIds" item="item" open="("  separator="," close=")" >
+				#{item}
+			</foreach>
+		</if>
+		order by main.product_id
+		limit  #{startLimit} , #{endLimit}
+    </select>
+    
+    <select id="getProductByProductId" resultType="productModel" parameterType="productModel">
+         select 
+		    main.product_id as productId,
+		    main.pro_catalog_id as proCatalogId,
+		    main.product_name as productName,
+		    ifnull(main.product_desc,'') as productDesc,
+		    truncate(main.ec_price,2) as ecPrice,
+		    main.ec_price  as minPrice,
+		    main.ec_price  as maxPrice,
+		    main.package_standard as packageStandard,
+		    main.product_brand_id as productBrandId,
+		    main.available_stock as availableStock,
+		    main3.product_brand_name as productBrandName,
+		    main2.image_url as imageUrl
+		from product main
+		left join (
+		select * from product_img mm 
+		where  mm.image_order = 0 
+		<if test="productId != null and productId != '' ">
+			and mm.product_id = #{productId}
+			limit 1 
+		</if>
+		) main2
+		on main.product_id = main2.product_id
+		inner join product_brand main3
+		on main.product_brand_id = main3.product_brand_id
+		where main.is_delete = 'N'
+		and main.is_onsale = 'Y'
+		<if test="productId != null and productId != '' ">
+			and main.product_id = #{productId}
+		</if>
+
+    </select>
+    
+    <!-- findAll -->
+    <select id="deleteProductStock" resultType="productModel" parameterType="productModel">
+         select 
+			main.product_id as productId
+		from product main
+		where  main.available_stock &lt;= 0 
+		limit  #{startLimit} , #{endLimit}
+    </select>
+    
+    <select id="queryWapProductViewCategoryList" resultType="productCategoryViewBaseModel" parameterType="com.ninedrug.search.business.base.Pageable">
+    	select 
+			main.view_cate_id ,
+			main.base_cate_id ,
+			main3.fir_catalog_id ,
+			main3.sec_catalog_id ,  
+			main3.product_id 
+		from view_base_cate main
+		inner join (select  main.*
+			from view_category main
+			where main.cate_level = 3
+			and main.cate_type = 1
+			and main.is_delete = 'N' ) main2
+			on main.view_cate_id = main2.id
+		left join (select * from product_catalog_def where fir_catalog_id is not null) main3
+        on main.base_cate_id = main3.catalog_id
+		<where>
+		    main3.product_id is not null
+			<if test="params.viewCateId != null and params.viewCateId != '' ">
+				and main.view_cate_id = #{params.viewCateId}
+			</if>
+			<if test="params.viewCateIds != null and params.viewCateIds != '' ">
+				and main.view_cate_id in 
+				<foreach collection="params.viewCateIds" item="item" open="("  separator="," close=")" >
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		<if test="page !=null">
+			limit #{offset} , #{size}	
+		</if>
+     </select>
+	
+	<select id="queryPCProductViewCategoryList" resultType="productCategoryViewBaseModel" parameterType="com.ninedrug.search.business.base.Pageable">
+    	select 
+			main.view_cate_id as viewCateId,
+			main.base_cate_id as baseCateId,
+			main3.fir_catalog_id as firCatalogId,
+			main3.sec_catalog_id as secCatalogId,  
+			main3.product_id as productId
+		from view_base_cate main
+		inner join (select  main.*
+			from view_category main
+			where main.cate_level = 3
+			and main.platform = 1
+			and main.cate_type = 1
+			and main.is_delete = 'N' ) main2
+			on main.view_cate_id = main2.id
+		left join (select * from product_catalog_def where fir_catalog_id is not null) main3
+        on main.base_cate_id = main3.catalog_id
+		<where>
+			<if test="params.viewCateId != null and params.viewCateId != '' ">
+				 main.view_cate_id = #{params.viewCateId}
+			</if>
+			<if test="params.viewCateIds != null and params.viewCateIds != '' ">
+				and main.view_cate_id in 
+				<foreach collection="params.viewCateIds" item="item" open="("  separator="," close=")" >
+					#{item}
+				</foreach>
+			</if>
+		</where>
+		<if test="page !=null">
+			limit #{offset} , #{size}	
+		</if>
+     </select>
+	
+	<select id="selectCouponById" resultType="Map" >
+		select 
+			main.coupon_id as couponId,
+			main.coupon_name as couponName,
+			main.coupon_type as couponType
+		from coupon main
+		where main.coupon_id = #{couponId}
+	</select>
+    
+</mapper>

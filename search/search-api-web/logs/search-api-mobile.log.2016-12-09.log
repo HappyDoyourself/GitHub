@@ -1,0 +1,54 @@
+2016-12-09 11:29:45.978 [main] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: best-match
+2016-12-09 11:29:45.988 [main] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+2016-12-09 11:29:45.990 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection request: [route: {}->http://mall.soa.9drug.cn:80][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2016-12-09 11:29:46.003 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection leased: [id: 0][route: {}->http://mall.soa.9drug.cn:80][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2016-12-09 11:29:46.005 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Opening connection {}->http://mall.soa.9drug.cn:80
+2016-12-09 11:29:46.009 [main] DEBUG o.a.h.impl.conn.DefaultManagedHttpClientConnection - http-outgoing-0: Shutdown connection
+2016-12-09 11:29:46.009 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Connection discarded
+2016-12-09 11:29:46.009 [main] DEBUG o.a.h.impl.conn.DefaultManagedHttpClientConnection - http-outgoing-0: Close connection
+2016-12-09 11:29:46.009 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection released: [id: 0][route: {}->http://mall.soa.9drug.cn:80][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2016-12-09 11:30:17.589 [main] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: best-match
+2016-12-09 11:30:17.600 [main] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+2016-12-09 11:30:17.602 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection request: [route: {}->http://mall.soa.9drug.cn:80][total kept alive: 0; route allocated: 0 of 2; total allocated: 0 of 20]
+2016-12-09 11:30:17.617 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection leased: [id: 0][route: {}->http://mall.soa.9drug.cn:80][total kept alive: 0; route allocated: 1 of 2; total allocated: 1 of 20]
+2016-12-09 11:30:17.618 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Opening connection {}->http://mall.soa.9drug.cn:80
+2016-12-09 11:30:17.621 [main] DEBUG o.a.http.impl.conn.HttpClientConnectionOperator - Connecting to mall.soa.9drug.cn/192.168.1.214:80
+2016-12-09 11:30:17.625 [main] DEBUG o.a.http.impl.conn.HttpClientConnectionOperator - Connection established 2.0.1.8:63001<->192.168.1.214:80
+2016-12-09 11:30:17.625 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Executing request POST /search-api-web/product/saveOrUpdate/30876 HTTP/1.1
+2016-12-09 11:30:17.625 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Target auth state: UNCHALLENGED
+2016-12-09 11:30:17.626 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Proxy auth state: UNCHALLENGED
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> POST /search-api-web/product/saveOrUpdate/30876 HTTP/1.1
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Content-Length: 0
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Host: mall.soa.9drug.cn
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Connection: Keep-Alive
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> User-Agent: Apache-HttpClient/4.3.5 (java 1.5)
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.headers - http-outgoing-0 >> Accept-Encoding: gzip,deflate
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "POST /search-api-web/product/saveOrUpdate/30876 HTTP/1.1[\r][\n]"
+2016-12-09 11:30:17.627 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Content-Length: 0[\r][\n]"
+2016-12-09 11:30:17.628 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Content-Type: application/x-www-form-urlencoded; charset=UTF-8[\r][\n]"
+2016-12-09 11:30:17.628 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Host: mall.soa.9drug.cn[\r][\n]"
+2016-12-09 11:30:17.628 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Connection: Keep-Alive[\r][\n]"
+2016-12-09 11:30:17.628 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "User-Agent: Apache-HttpClient/4.3.5 (java 1.5)[\r][\n]"
+2016-12-09 11:30:17.628 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "Accept-Encoding: gzip,deflate[\r][\n]"
+2016-12-09 11:30:17.628 [main] DEBUG org.apache.http.wire - http-outgoing-0 >> "[\r][\n]"
+2016-12-09 11:30:17.709 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "HTTP/1.1 200 OK[\r][\n]"
+2016-12-09 11:30:17.709 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "Server: nginx/1.10.1[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "Date: Fri, 09 Dec 2016 03:34:00 GMT[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "Transfer-Encoding: chunked[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "Connection: keep-alive[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "41[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "{"code":0,"msg":"30876[0xe5][0x95][0x86][0xe5][0x93][0x81][0xe7][0xb4][0xa2][0xe5][0xbc][0x95][0xe6][0x9b][0xb4][0xe6][0x96][0xb0][0xe6][0x88][0x90][0xe5][0x8a][0x9f][0xef][0xbc][0x81]","result":null}[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "0[\r][\n]"
+2016-12-09 11:30:17.710 [main] DEBUG org.apache.http.wire - http-outgoing-0 << "[\r][\n]"
+2016-12-09 11:30:17.713 [main] DEBUG org.apache.http.headers - http-outgoing-0 << HTTP/1.1 200 OK
+2016-12-09 11:30:17.713 [main] DEBUG org.apache.http.headers - http-outgoing-0 << Server: nginx/1.10.1
+2016-12-09 11:30:17.713 [main] DEBUG org.apache.http.headers - http-outgoing-0 << Date: Fri, 09 Dec 2016 03:34:00 GMT
+2016-12-09 11:30:17.713 [main] DEBUG org.apache.http.headers - http-outgoing-0 << Content-Type: application/json;charset=UTF-8
+2016-12-09 11:30:17.713 [main] DEBUG org.apache.http.headers - http-outgoing-0 << Transfer-Encoding: chunked
+2016-12-09 11:30:17.713 [main] DEBUG org.apache.http.headers - http-outgoing-0 << Connection: keep-alive
+2016-12-09 11:30:17.718 [main] DEBUG org.apache.http.impl.execchain.MainClientExec - Connection can be kept alive indefinitely
+2016-12-09 11:30:17.720 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection [id: 0][route: {}->http://mall.soa.9drug.cn:80] can be kept alive indefinitely
+2016-12-09 11:30:17.720 [main] DEBUG o.a.h.impl.conn.PoolingHttpClientConnectionManager - Connection released: [id: 0][route: {}->http://mall.soa.9drug.cn:80][total kept alive: 1; route allocated: 1 of 2; total allocated: 1 of 20]

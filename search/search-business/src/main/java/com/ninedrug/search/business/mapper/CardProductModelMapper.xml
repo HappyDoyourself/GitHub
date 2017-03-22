@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ninedrug.search.business.mapper.CardProductModelMapper">
+
+	<select id="selectProductCardList" resultType="CardProductModel" parameterType="com.ninedrug.search.business.base.Pageable">
+				select
+					main.product_id as productId,
+					main.card_id  as cardId,
+					main2.card_code as cardCode,
+					main2.card_name as cardName,
+					main2.card_desc as cardDesc,
+					main2.card_icon_url_pc as cardIconUrlPc,
+					main2.card_icon_url_app as cardIconUrlApp 
+				from  card_def main
+				left join card main2 
+				on main.card_id = main2.card_id 
+				where main2.is_enable = 'Y'
+				and main2.is_delete = 'N'
+				<if test="params.productId != null and params.productId != '' ">
+					and main.product_id = #{params.productId}
+				</if>
+				<if test="params.productIds != null and params.productIds != '' ">
+					and main.product_id in 
+					<foreach collection="params.productIds" item="item" open="("  separator="," close=")" >
+						#{item}
+					</foreach>
+				</if>
+				<if test="params.cardId != null and params.cardId != '' ">
+					and main2.card_id = #{params.cardId}
+				</if>
+				<if test="size > 0">
+					limit #{offset} , #{size}	
+				</if>
+	</select>
+    
+    
+</mapper>

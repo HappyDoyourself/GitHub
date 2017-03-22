@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ninedrug.search.business.mapper.CouponModelMapper">
+
+	<select id="selectCouponById" resultType="Map" >
+		select 
+			main.coupon_id as couponId,
+			main.coupon_name as couponName,
+			main.coupon_type as couponType
+		from coupon main
+		where main.coupon_id = #{couponId}
+	</select>
+    
+    
+	
+	<select id="selectCouponAllRangeProductListDetail" resultType="Map">
+		select 
+			main.product_id as productId
+   		from product main
+		where main.is_onsale = 'Y' 
+		and main.is_delete = 'N'
+		and main.product_id not in (select t.product_id from coupon_product_blacklist t where t.coupon_id = #{couponId})
+	</select>	
+		
+	<select id="selectCouponCateRangeProductListDetail" resultType="Map" >
+		select p.product_id, p.product_name, p.available_stock, p.product_desc, p.ec_price, pi.image_url, p.package_standard, 
+				p.product_brand_id, pb.product_brand_name 
+		from (select ccr.category_id from coupon_category_range ccr where ccr.coupon_id = #{couponId}) c
+		left join product_catalog_def main1 on c.category_id = main1.catalog_id 
+		left join product p on main1.product_id = p.product_id 
+		where   p.is_onsale = 'Y' 
+				and p.product_id not in (select t.product_id from coupon_product_blacklist t where t.coupon_id = #{couponId})
+	</select>
+	
+	<select id="selectCouponProductRangeProductListDetail" resultType="Map">
+		select p.product_id   as productId
+   		from coupon_product_range cpr
+		inner join product p on cpr.product_id = p.product_id and p.is_onsale = 'Y' and p.is_delete = 'N'
+		where cpr.coupon_id = #{couponId} 
+	</select>
+    
+    
+</mapper>

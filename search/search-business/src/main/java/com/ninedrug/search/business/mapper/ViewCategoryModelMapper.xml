@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ninedrug.search.business.mapper.ViewCategoryModelMapper">
+
+	
+	<select id="queryViewCategoryById" resultType="ViewCategoryModel" parameterType="ViewCategoryModel">
+    	select 
+    	      main.id as id,
+			  main.platform as platform,
+			  main.parent_id as parentId,
+			  main.cate_name as cateName,
+			  main.cate_level as cateLevel,
+			  main.cate_type as cateType
+    	from view_category main
+    	where main.id = #{id}
+    	and main.is_delete = 'N'
+    </select>
+	
+	
+	<select id="queryViewCategoryByParentId" resultType="ViewCategoryModel" parameterType="ViewCategoryModel">
+    	select 
+    	      main.id as id,
+			  main.platform as platform,
+			  main.parent_id as parentId,
+			  main.cate_name as cateName,
+			  main.cate_level as cateLevel,
+			  main.cate_type as cateType
+    	from view_category main
+    	where main.parent_id = #{parentId}
+    	and main.is_delete = 'N'
+    </select>
+	    
+</mapper>
