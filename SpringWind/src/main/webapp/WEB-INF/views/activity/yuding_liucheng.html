@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>预订流程</title>
+<meta name="Keywords" content="" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Cache-Control" content="no-cache">
+<link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/active.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+
+<style>
+ 
+</style>
+</head>
+<!--<link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/active.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />-->
+
+
+<body>
+    <div class="flow_all">
+        <div class="flow_top">
+            <p class="flow_tit">预订流程</p>
+            <p class="count_down">5 <span>s</span></p>
+        </div>
+        <div class="flow_ul">
+          <div class="flow_li flow_li1">
+            <p class="p3">支付定金即可报名</p>
+            <img src="#springUrl('/static/img/index/number1.png')" alt="">
+
+          </div>
+          <div class="bor3"></div>
+          <div class="flow_li">
+            <p>支付成功后<br/>获取工作人员联系方式</p>
+            <img src="#springUrl('/static/img/index/number2.png')" alt="">
+          </div>
+          <div class="bor3"></div>
+          <div class="flow_li">
+            <p class="p2">参加活动，交付剩余尾款</p>
+            <img src="#springUrl('/static/img/index/number3.png')" alt="">
+          </div>
+          <div class="bor3"></div>
+          <div class="flow_li">
+            <p class="p2">无论是否出席，定金不退</p>
+            <img src="#springUrl('/static/img/index/number4.png')" alt="">
+          </div>
+          <div class="bor3"></div>
+        </div>
+        <input type="hidden" name="amount" id="amount" value="${amount}">
+        <input type="hidden" name="activityId" id="activityId" value="${activityId}">
+        <input type="hidden" name="tag" id="tag" value="${tag}">
+    </div>
+</body>
+<script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+<script>
+    var amount = $("#amount").val();
+    var activityId = $("#activityId").val();
+    var tag = $("#tag").val();
+    window.setInterval(signUp, 5000);
+    function signUp() {
+        $(location).attr('href',"#springUrl('/sms/signUp?activityId="+activityId+"&openId=123456&tag="+tag+"&amount="+amount+"')")
+    }
+    var first = 5;
+    $(function(){
+        setInterval(daojishi, 1000);
+        function daojishi() {
+            first = first-1;
+            if(first<=0){
+                first = 0;
+            }
+            $(".count_down").html(first);
+        }
+    })
+
+</script>
+</html>
+
+

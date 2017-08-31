@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>报名</title>
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+    <link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+    <style>
+        html,body{
+            background:#fff;
+        }
+    </style>
+    <style>
+        html,body{
+            background:#fff;
+        }
+    </style>
+</head>
+
+
+<!--<link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+<style>
+  html,body{
+    background:#fff;
+  }
+</style>-->
+<body>
+    <div class="apply_data">
+      <form action="#springUrl('/order/create')" method="post" id="form1">
+        <input type="hidden" name = "activityId" id="activityId" value = "${activityId}" ></input>
+        <input type="hidden" name = "amount" id="amount" value = "${amount}" ></input>
+        <input type="hidden" name = "tag" id="tag" value = "${tag}" ></input>
+          <input type="hidden" name = "openId" id="openId" value = "123456" ></input>
+
+      <ul class="apply_data_ul">
+        <li class="apply_data_li">
+          <img src="#springUrl('/static/img/index/user.png')" alt="">
+          <div>
+<!--
+            <input type="text" placeholder="请输入姓名">
+-->
+            <input type="text" name="userName" id="userName" class="form-control" autofocus="autofocus" placeholder="请输入姓名" required="">
+
+          </div>
+        </li> 
+        <li class="apply_data_li">
+          <img src="#springUrl('/static/img/index/tel.png')" alt="">
+          <div>
+<!--
+            <input type="text" placeholder="请输入手机号">
+-->
+            <input type="text" name="phone" id = "phone" class="form-control" placeholder="请输入手机号" required="">
+
+          </div>
+        </li>
+        <li class="apply_data_li">
+          <img src="#springUrl('/static/img/index/num.png')" alt="">
+          <div>
+<!--
+            <input type="text" placeholder="请输入验证码">
+-->
+            <input type="text" name="verifyCode" id="verifyCode" class="form-control" placeholder="请输入验证码" required="">
+
+
+          </div>
+
+                <input type="button" class="yzm"    name="sendVerify" style="background-color: #FF0000;" id="sendVerify" onclick="sendVerification() " value="发送验证码"   />
+<!--
+          <img class="yzm" src="#springUrl('/static/img/index/yzm.png')" alt="">
+-->
+<!--
+          <input type="button"  style="float:right; background-color: #FF0000;height: 50px;width: 200px;"  name="sendVerify" id="sendVerify" onclick="sendVerification() " value="发送验证码"   />
+-->
+
+        </li>
+      </ul>
+<!--
+      <a class="next_a" href="javascript:;">下一步</a>
+-->
+        <input type="button" id="next"  value="下一步" id="next"  class="next_a"/>
+      </form>
+    </div>
+</body>
+</html>
+<script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+<script src="#springUrl('/static/js/bootstrap.min.js')"></script>
+
+<script type="text/javascript">
+    $(function () {
+        if($("#userName")!=null){
+            $("#userName").focus();
+            $("#userName").click();
+        }
+    })
+    //发送成功后 60s后才能再次发送
+    var sendTime = 60;
+    function sendRepead() {
+        var count = setInterval(repeatSendSms,1000);
+        function repeatSendSms() {
+            sendTime = sendTime-1;
+            if(sendTime<=0){
+                // clearInterval(test1);
+                $("#sendVerify").attr("disabled", false);
+               //    $("#sendVerify").attr("style","float:right; background-color: #FF0000;height: 50px;width: 200px;");
+                $("#sendVerify").attr("class","yzm");
+                sendTime=60;
+                $("#sendVerify").val("再次发送");
+                clearInterval(count);
+                return false;
+            }
+            $("#sendVerify").val(sendTime);
+            $("#sendVerify").attr("disabled", true);
+            $("#sendVerify").attr("class","yzm");
+          //  $("#sendVerify").attr("style","float:right; background-color: #FF0000;height: 50px;width: 200px;");
+        }
+    }
+
+
+
+    var vcode = "";
+    function sendVerification(){
+        var phone = $("#phone").val();
+        var userName = $("#userName").val();
+        if (phone == null || phone == ""){
+            alert("请输入手机号码")
+            return false;
+        }if (userName == null || userName == ""){
+            alert("请输入姓名")
+            return false;
+        }
+        //手机号码正则验证
+        var reg = /^1[3|4|5|7|8][0-9]{9}$/; //验证规则
+        if(!reg.test(phone)){
+            alert("手机号码输入错误")
+            return false;
+        }
+        $.ajax({
+            url : "#springUrl('/sms/sendSms')",
+            data: {phone:phone,userName:userName},
+            type : "post",
+            dataType: "json",
+            success : function(data) {
+                $.each(data,function (i,n) {
+                    var str =$.parseJSON(n); //js操作的是json对象，而返回的是json字符串，需要转码。通过JSON.parse(str)或者$.parseJSON(n)来转化
+                    if (str.code == "FAIL"){
+                        alert(str.errorMessage);
+                    }else {
+                        vcode = str.vcode;
+                        sendRepead();					 }
+                })
+            },
+            error : function(responseText, error) {
+                alert("系统错误，请稍候再试！");
+            }
+        });
+    }
+    $(document).ready(function ()
+    {
+        $('#next').click(function()
+        {
+            var code = $("#verifyCode").val();
+            if(code == null || code == ""){
+                alert("请输入手机验证码");
+                return false;
+            }else if(vcode == null  || vcode == "") {
+                alert("请发送手机验证码");
+                return false;
+            }else if(code != vcode){
+                alert("验证码不正确");
+                return false;
+            }
+            $('#form1').submit();
+        });
+    });
+</script>
+

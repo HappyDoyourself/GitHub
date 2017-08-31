@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<title>微信支付</title>
+<body>
+<form id="payment" method="post" action="#springUrl('/wxpay/wxpay.html')">
+	<input type=hidden name="content" value="$!{content}"/>
+	<input type=hidden name="paymentNo" value="$!{paymentNo}"/>
+	<input type=hidden name="returnUrl" value="$!{returnUrl}"/>
+	<input type=hidden name="paymentFee" value="$!{paymentFee}"/>
+	<input type=hidden name="orderId" value="$!{orderId}"/>
+	<!--<input type = "submit" value="提交">-->
+</body>
+<script language="javascript">
+	document.getElementById('payment').submit();
+</script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>订单详情</title>
+<meta name="Keywords" content="" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Cache-Control" content="no-cache">
+<style>
+    html,body{
+        background:#f5f5f5;
+    }
+</style>
+<link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+</head>
+<!--<style>
+    html,body{
+        background:#f5f5f5;
+    }
+</style>
+<link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />-->
+<body>
+    <div class="orderDetail">
+       <div class="orderDetail_top">
+          <p class ="left">
+            <span>订单编号：</span>
+            <span class="li_span">DJ_$!{order.id}</span>
+           <!-- <span class="copy">复制</span>-->
+          </p>
+          <p class="right">已完成</p>
+       </div>
+       <div class="orderDetail_ul_all">
+         <ul class="orderDetail_ul">
+           <li class="orderDetail_li">
+              <a href="javascript:;">
+              <p class="left_p"><span>活动名称：</span><span class="li_span">
+                  #if(${title.length()}>14)
+                #set($title=${title.substring(0,14)})
+                <span title="$!{title}">$title...</span>
+                #else
+                $!{title}
+                #end</span></p>
+              <p class="right_img"><img src="springUrl('/static/img/index/more.png')" alt=""></p>
+              </a>
+           </li>
+           <li class="orderDetail_li">
+             <p class="left_p"><span>支付方式：</span>
+               #if($!{order.orderType} == 1)
+             <p class="right_p">订金支付</p>
+               #else
+               <p class="right_p">全额支付</p>
+               #end
+           </li>
+           <li class="orderDetail_li">
+             <p class="left_p"><span>订单金额：</span></p>
+             <p class="right_p">￥$!{order.orderAmount}</p>
+           </li>
+           <li class="orderDetail_li small_li">
+             <p class="left_p"><span>联系人：</span></p>
+             <p class="right_p">$!{order.userName}</p>
+           </li>
+           <li class="orderDetail_li lst_li">
+             <p class="left_p"><span>联系电话：</span></p>
+             <p class="right_p">$!{order.phone}</p>
+           </li>
+         </ul>
+        </div>
+        <div class="tishi_tip">
+            
+            <p>*注：定金将不退换</p>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   
+</script>
+

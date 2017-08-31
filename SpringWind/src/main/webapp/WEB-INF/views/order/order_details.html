@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>订单详情</title>
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+    <link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+    <style>
+        html,body{
+            background:#f5f5f5;
+        }
+    </style>
+</head>
+
+<!--<link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+<style>
+  html,body{
+    background:#f5f5f5;
+  }
+</style>
+</head>-->
+
+<body>
+    <div class="orderDetail">
+       <div class="orderDetail_top">
+          <p class ="left">
+            <span>订单编号：</span>
+            <span class="li_span">DJ_$!{order.id}</span>
+           <!-- <span class="copy">复制</span>-->
+          </p>
+          <p class="right">
+              #if($!{order.orderState} == 0)
+              等待付款
+              #end
+              #if($!{order.orderState} == 1)
+              已支付
+              #end
+              #if($!{order.orderState} == 2)
+              支付失败
+              #end
+              #if($!{order.orderState} == 3)
+              取消
+              #end
+              #if($!{order.orderState} == 4)
+              订单超时
+              #end
+              </p>
+       </div>
+       <div class="orderDetail_ul_all">
+         <ul class="orderDetail_ul">
+           <li class="orderDetail_li">
+              <a href="javascript:;">
+              <p class="left_p"><span>活动名称：</span>  </p>
+                  <p class="right_p">
+                  <span class="li_span">$!{activityTitle}</span>
+                  </p>
+             <!-- <p class="right_img">
+                  <img src="#springUrl('')$!{pic}" alt="">
+                  </p>-->
+              </a>
+           </li>
+           <li class="orderDetail_li">
+             <p class="left_p"><span>支付方式：</span></p>
+             <p class="right_p">
+                   #if($!{order.orderType}==1)
+                      全额支付
+                    #else
+                       定金支付
+                    #end
+
+             </p>
+           </li>
+           <li class="orderDetail_li">
+             <p class="left_p"><span>订单金额：</span></p>
+             <p class="right_p">￥${order.orderAmount}</p>
+           </li>
+             <input type="hidden" value="${endTime}" id="endTime" name="endTime">
+           <li class="orderDetail_li lst_li">
+             <p class="line_p"></p>
+           </li>
+         </ul>
+        </div>
+        <div class="orderDetail_bottom">
+            #if($!{order.orderState} == 0 || $!{order.orderState} == 2)
+            <a href="#springUrl('/orderPayment/wxPay')?orderId=$!{order.id}" id = "zhifu">去支付</a>
+            #end
+            #if($!{order.orderState} == 4)
+            <a href="#springUrl('/activity/activityDetail')?id=$!{activityId}&tag=$!{tag}" id="reOrder">再次预订</a>
+            #end
+            <p>付款后可查看联系方式</p>
+        </div>
+    </div>
+</body>
+</html>
+<script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+<script>
+    $(function(){
+        var countdown = setInterval(countTime, 1000);
+        var endTime = $("#endTime").val();
+        var dateTime = new Date();
+        function countTime(){
+            var dateTime = new Date();
+            var nMS= endTime - dateTime.getTime();
+            var myD=Math.floor(nMS/(1000*60*60*24)); //天
+            var myH=Math.floor(nMS/(1000*60*60)) % 24; //小时
+            var myM=Math.floor(nMS/(1000*60)) % 60; //分钟
+            var myS=Math.floor(nMS/1000) % 60; //秒
+            if(myH>=0){
+                var str = "剩余付款时间 " + myM  + "分" + myS  + "秒";
+            }else{
+                var str = "已结束";
+                $("#zhifu").attr("style","background:#CCCCCC;");
+                $("#zhifu").removeAttr("href");
+                $("#zhifu").attr("display","none");
+                $("#reOrder").attr("display","block");
+                clearInterval(countdown);
+            }
+            $(".line_p").html(str);
+        }
+
+    })
+</script>
+

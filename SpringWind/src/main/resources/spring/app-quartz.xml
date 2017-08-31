@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		                    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		                    http://www.springframework.org/schema/context 
+		                    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		                    http://www.springframework.org/schema/tx 
+		                    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		                    http://www.springframework.org/schema/aop 
+		                    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		                    http://www.springframework.org/schema/task 
+		                    http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+	<!-- 使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 -->
+	<!-- <bean id="taskJob" class="cn.com.dssp.work.action.QuatzTask" /> -->
+
+
+<!-- 调度工厂 -->
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+		</list>
+	</property>
+</bean>
+
+<!-- http://www.meiriyouke.net/?p=131 -->
+<!-- "0 15 10 * * ?"  每天上午10:15触发                            "0 15 * * * ?"	 	每个小时的15分触发一次-->
+</beans>

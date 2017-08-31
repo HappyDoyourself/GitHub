@@ -1,0 +1,170 @@
+<!--<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSPINIA | Basic Form</title>
+
+</head>-->
+<link href="#springUrl('/static/css/bootstrap.min.css')" rel="stylesheet">
+<link href="#springUrl('/static/css/style.css')" rel="stylesheet">
+<link href="#springUrl('/static/css/datetimepicker.css')" rel="stylesheet">
+<body class="white-bg">
+<div class="ibox-content" style="width: 430px;">
+   <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}" enctype="multipart/form-data" >
+   	   <input type="hidden" name="id" value="$!{activity.id}">
+       <div class="form-group"><label class="col-sm-2 control-label">活动名称</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{activity.title}" name="title" data-rule="活动名称:required;title">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">活动内容</label>
+           <div class="col-sm-10">
+               <textarea class="form-control"   value="$!{activity.content}"  name="content" data-rule="活动内容:required;content">$!{activity.content}</textarea>
+           </div>
+       </div>
+
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">上传图片</label>
+
+           #if("$!{activity.pic}" == "")
+           <div class="col-sm-10">
+               <input type="file" name="pic"  id="pic" data-rule="上传图片:required;pic"/>
+           </div>
+           #end
+           #if("$!{activity.pic}" != "")
+           <div class="col-sm-10">
+               <input type="hidden" name="pic"  id="pic" value="$!{activity.pic}">
+               <input type="file"  name="newPic" id="newPic"/>
+           </div>           <img alt="活动" src="#springUrl('')$!{activity.pic}" style="height:100%; width:100%">
+             #end
+       </div>
+
+
+       <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">活动标签</label>
+            <div class="col-sm-10">
+            <select class="form-control m-b" name="tag">
+                #if($!{activity.tag} != "" && $!{activity.tag} == 1)
+                <option  value="1" selected = "selected">招募</option>
+                #else
+                <option  value="1">招募</option>
+                #end
+
+                #if($!{activity.tag} != "" && $!{activity.tag} == 2)
+                <option  value="2" selected = "selected">预定</option>
+                #else
+                <option  value="2">预定</option>
+                #end
+               <!-- <option  value="2">预定</option>
+                <option  value="3">抢票</option>
+                <option  value="4">报名</option>-->
+            </select>
+            </div>
+        </div>
+       <div class="form-group"><label class="col-sm-2 control-label">名额</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{activity.places}" name="places" data-rule="名额:required;places">
+           </div>
+       </div>
+       <div class="form-group"><label class="col-sm-2 control-label">定金</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{number.format('#0.00', $!{activity.deposit})}" name="deposit" data-rule="定金:required;deposit">
+           </div>
+       </div>
+       <div class="form-group"><label class="col-sm-2 control-label">全价</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{activity.fullPrice}" name="fullPrice" data-rule="全价:required;fullPrice">
+           </div>
+       </div>
+       <div class="form-group"><label class="col-sm-2 control-label">活动地址</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{activity.detailAddress}" name="detailAddress" data-rule="活动地址:required;detailAddress">
+           </div>
+       </div>
+
+
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">开始时间:</label>
+                   <div class="col-sm-10">
+                       <input value="$!date.format('yyyy-MM-dd HH:mm:ss ',$!activity.beginTime)"    name="beginTime" id="beginTime">
+                   </div>
+               </div>
+
+
+
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">结束时间:</label>
+                   <div class="col-sm-10">
+                       <input value="$!date.format('yyyy-MM-dd HH:mm:ss ',$!activity.endTime)"    name="endTime" id="endTime">
+                   </div>
+               </div>
+
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">#if($!{activity})修 改#else提 交#end</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+<script src="#springUrl('/static/plugins/nice-validator-0.8.1/jquery.validator.js?local=zh-CN')"></script>
+<script src="#springUrl('/static/js/common.js')"></script>
+<script src="#springUrl('/static/js/bootstrap-datetimepicker.js')"></script>
+<script src="#springUrl('/static/js/bootstrap-datetimepicker.zh-CN.js')"></script>
+
+<script type="text/javascript">
+    $('#beginTime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        language: 'zh-CN',
+        autoclose: true
+    });
+    $('#endTime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        language: 'zh-CN',
+        autoclose: true
+    });
+    //$("#startTime").val(formatDate($('#startTime').val()));
+   /* $("input.dateStart").on("click",function(){
+        //将后一个输入框的日期值设为结束日期
+        $(this).datetimepicker("setEndDate",$(this).next().val());
+    });
+    $("input.dateEnd").on("click",function(){
+        //将前一个输入框的日期值设为开始日期
+        $(this).datetimepicker("setStartDate",$(this).prev().val());
+    });*/
+
+
+
+$("#myForm").validator({
+    valid: function(form){
+        var me = this;
+        // 提交表单之前，hold住表单，防止重复提交
+        me.holdSubmit();
+        $.ajax({
+        	url: "#springUrl('/activities/editActivity')",
+            contentType: false,
+            processData: false,
+            cache: false,
+          // data: $(form).serialize(),
+            data: new FormData($('#myForm')[0]),
+            type: "POST",
+            success: function(data){
+            	var d = JSON.parse(data);
+                if(d.success && d.data){
+                	window.parent.location.reload();
+                	//当你在iframe页面关闭自身时
+                	//var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                	//parent.layer.close(index); //再执行关闭   
+                } else {
+                	//失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
+                    me.holdSubmit(false);
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

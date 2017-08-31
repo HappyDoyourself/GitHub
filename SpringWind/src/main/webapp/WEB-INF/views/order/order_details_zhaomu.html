@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>订单详情</title>
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+    <link href="#springUrl('/static/css/my/index.css')"  rel="stylesheet" />
+    <style>
+        html,body{
+            background:#f5f5f5;
+        }
+    </style>
+<body>
+
+
+
+    <div class="orderDetail">
+       <div class="orderDetail_top">
+          <p class ="left">
+            <span>订单编号：</span>
+            <span class="li_span">DJ_$!{order.id}</span>
+            <!--<span class="copy">复制</span>-->
+          </p>
+          <p class="right">已申请</p>
+       </div>
+       <div class="orderDetail_ul_all">
+         <ul class="orderDetail_ul">
+           <li class="orderDetail_li">
+              <a href="javascript:;">
+              <p class="left_p"><span>活动名称：</span><span class="li_span">
+                   #if(${title.length()}>14)
+                #set($title=${title.substring(0,14)})
+                <span title="$!{title}">$title...</span>
+                #else
+                $!{title}
+                #end
+                  </span></p>
+              <p class="right_img"><img src="#springUrl('/static/img/index/more.png')" alt=""></p>
+              </a>
+           </li>
+           <li class="orderDetail_li">
+             <p class="left_p"><span>支付方式：</span></p>
+             <p class="right_p">无</p>
+           </li>
+           <li class="orderDetail_li">
+             <p class="left_p"><span>订单金额：</span></p>
+             <p class="right_p">￥0</p>
+           </li>
+           <li class="orderDetail_li end_lst_li">
+             <p class="line_p">您的信息已经提交<br/>若成功录取，工作人员将会与您联系</p>
+           </li>
+         </ul>
+        </div>
+        <div class="orderDetail_bottom">
+           <!-- <a href="javascript:;">去支付</a>-->
+           <!-- <p>付款后可查看联系方式</p>-->
+        </div>
+    </div>
+</body>
+</html>
+<script>
+   
+</script>
+

@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>近期活动</title>
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <link href="#springUrl('/static/css/my/index.css')" rel="stylesheet">
+    <link href="#springUrl('/static/css/my/reset.css')" rel="stylesheet">
+    <style>
+        html,body{
+            background:#f5f5f5;
+        }
+    </style>
+</head>
+
+
+<!--
+<link href="#springUrl('/static/css/my/index.css')" rel="stylesheet">
+<link href="#springUrl('/static/css/my/reset.css')" rel="stylesheet">
+
+<link href="#springUrl('/static/css/my/pullToRefresh.css')"  rel="stylesheet" />
+-->
+<!--
+<link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
+-->
+<!--
+<link href="#springUrl('/static/css/my/css.css')" rel="stylesheet">
+
+<style>
+    html,body{
+        background:#f5f5f5;
+    }
+</style>
+-->
+<div  class="list_all" id="wrapper">
+    <ul class="list_ul">
+        <input type="hidden" id="size" value="${pageActivity.size}">
+        <input type="hidden" id= "total" value="${pageActivity.total}">
+        <input type="hidden" id="current" value="${pageActivity.current}">
+        #foreach($activity in $pageActivity.records)
+        <li class="list_li">
+            <div class="list_con">
+                #if($!{activity.tag} == 1)
+                <a href="#springUrl('/activity/activityDetail')?id=$!{activity.id}&tag=1">
+                    <div class="list_img">
+                        <img src="#springUrl('')$!{activity.pic}" alt="">
+                    </div>
+                <div class="list_bot">
+                    <img src="#springUrl('/static/img/zhaomua.png')" alt="">
+                    <p>&nbsp;
+                        #if(${activity.title.length()}>30)
+                         #set($title=${activity.title.substring(0,30)})
+                         <span title="$!{activity.title}" style="color:black">$title...</span>
+                        #else
+                        <span style="color:black">$!{activity.title}</span>
+                        #end
+                    </p>
+                </div></a>
+                #end
+                #if($!{activity.tag} == 2)
+                <a href="#springUrl('/activity/activityDetail')?id=$!{activity.id}&tag=2">
+                    <div class="list_img">
+                        <img src="#springUrl('')$!{activity.pic}" alt="">
+                    </div>
+                    <div class="list_bot">
+                    <img src="#springUrl('/static/img/xiangqingye_03.png')" alt="">
+                    <p>&nbsp;
+                        #if(${activity.title.length()}>30)
+                        #set($title=${activity.title.substring(0,30)})
+                        <span title="$!{activity.title}" style="color:black">$title...</span>
+                        #else
+                        <span  style="color:black">$!{activity.title}</span>
+                        #end
+                        </p>
+                </div> </a>
+                #end
+                <div class="list_area">
+                    <p class="left"><img src="#springUrl('/static/img/index/clock.png')" alt=""><span>$!{activity.detailAddress} / $!date.format('MM-dd  HH:mm',$!activity.beginTime) </span></p>
+                    <p class="right_p">
+                        #if($!{activity.state}==1)
+                        进行中
+                        #else
+                        <span style="color: black">已结束</span>
+                        #end
+                    </p>
+                </div>
+            </div>
+        </li>
+        #end
+    </ul>
+</div>
+
+#block("js")
+<script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+
+<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
+<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
+<script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
+<script src="#springUrl('/static/plugins/layer-v2.2/layer/layer.js')"></script>
+<!--
+<script src="#springUrl('/static/js/base_list.js')"></script>
+-->
+<script src="#springUrl('/static/js/common.js')"></script>
+
+<script src="#springUrl('/static/js/scroll/iscroll.js')"></script>
+<script src="#springUrl('/static/js/scroll/pullToRefresh.js')"></script>
+
+<script type="text/javascript">
+    var currPage = $("#size").val();
+    var total =$("#total").val();
+    var current = $("#current").val();
+    refresher.init({
+        id:"wrapper",
+        pullDownAction:Refresh,
+        pullUpAction:Load
+    });
+    function Refresh() {
+        // <-- Simulate network congestion, remove setTimeout from production!
+        wrapper.refresh();/****remember to refresh after  action completed！ --example-yourId.refresh(); ----| ****/
+        current --;
+        if(current<=0){
+            current=0;
+        }
+        $(location).attr('href',"#springUrl('/activity/list?_size=10&_index="+current+"')")
+    }
+
+    function Load() {
+        // <-- Simulate network congestion, remove setTimeout from production!
+        wrapper.refresh();/****remember to refresh after action completed！！！   -example--yourId.refresh(); --- ****/
+        current++;
+        if(current>(Math.ceil(total/currPage))){
+            current--;
+        }
+        $(location).attr('href',"#springUrl('/activity/list?_size=10&_index="+current+"')")
+    }
+</script>
+#end
+

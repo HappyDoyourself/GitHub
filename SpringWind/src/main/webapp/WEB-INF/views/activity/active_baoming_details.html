@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>活动详情</title>
+    <meta name="Keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+
+    <link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
+    <link href="#springUrl('/static/css/my/active.css')" rel="stylesheet">
+    <link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+    <style>
+        html,body{
+
+        }
+    </style>
+</head>
+
+
+    <!--<link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
+    <link href="#springUrl('/static/css/my/active.css')" rel="stylesheet">
+    <link href="#springUrl('/static/css/my/reset.css')"  rel="stylesheet" />
+<style>
+  html,body{
+   
+  }
+</style>
+</head>-->
+
+<body>
+   <div class="active_all">
+       <input type="hidden" value="$!{activity.id}" id="activityId">
+    <div class="active_top">
+       <img class="top_img" src="#springUrl('/static/img/index/li1.jpg')" alt="">
+       <div class="active_intro">
+         <img src="#springUrl('/static/img/index/yuding.png')" alt="">
+         <p class="intro_p">&nbsp;
+             #if(${activity.title.length()}>30)
+             #set($title=${activity.title.substring(0,30)})
+             <span title="$!{activity.title}">$title...</span>
+             #else
+             $!{activity.title}
+             #end</p>
+       </div>
+       <div class="active_num">
+         <div class="num_left">
+           <img src="#springUrl('/static/img/index/line.png')" alt="">
+           <p>名额：<span>$!{activity.places}</span> 名</p>
+         </div>
+           <input type="hidden" id="endTime" name="endTime" value="$!{endTime}">
+         <p class="num_right"></p>
+       </div>
+    </div>
+    <ul class="active_ul">
+      <li class="active_li">
+        <img src="#springUrl('/static/img/index/clock2.png')" alt="">
+        <p>$!date.format('yyyy-MM-dd HH:mm:ss',$!activity.beginTime)</p>
+      </li>
+      <li class="active_li">
+        <img src="#springUrl('/static/img/index/area2.png')" alt="">
+        <p>$!{activity.detailAddress}</p>
+      </li>
+      <li class="active_li">
+        <img src="#springUrl('/static/img/index/intro.png')" alt="">
+        <p>$!{activity.content}</p>
+      </li>
+    </ul>
+    <div class="active_bottom">
+      <div class="bottom_top">
+        <img src="#springUrl('/static/img/index/bor2.jpg')" alt="">
+      </div>
+      <div class="bottom_bot">
+        <div class="bot_left">
+          <img src="#springUrl('/static/img/index/dingjin.png')" alt="">
+          <p>￥$!{activity.deposit}</p>
+            <div class="radio_div">
+                <img class="green" src="#springUrl('/static/img/index/green1.png')" alt="">
+                <input type="radio" name="amount" value="$!{activity.deposit}" />            </div>
+        </div>
+        <div class="bot_left bot_center">
+          <img src="#springUrl('/static/img/index/quankuan.png')" alt="">
+            <p>￥$!{activity.fullPrice}</p>
+            <div class="radio_div">
+                <img class="green" src="#springUrl('/static/img/index/green1.png')" alt="">
+                <input type="radio" name="amount" value="$!{activity.fullPrice}" />           </div>
+        </div>
+          <!--  <a onclick="yuding()" id="btn">预定</a>
+           <a href="#springUrl('/sms/signUp')?activityId=$!{activity.id}&amount=1&tag=2">预定</a> -->
+<!--
+          <a onclick="yuding()" id="yuding">预定</a>
+-->
+
+          #if($!{activity.state} == 1)
+          <a onclick="yuding()" id="yuding">预定</a>
+          #else
+            <a  style="background:#CCCCCC;" id="yuding">预定</a>
+          #end
+      </div>
+    </div>
+   </div> 
+</body>
+</html>
+    <script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+    <script src="#springUrl('/static/js/my/activity-time.js')"></script>
+    <script>
+        $(function(){
+            $(".radio_div").click(function(event) {
+                $(this).children('img').attr("src","#springUrl('/static/img/index/green.png')");
+                $(this).parent().siblings('.bot_left').children('.radio_div').children('img').attr("src","#springUrl('/static/img/index/green1.png')")
+                $(this).children("input:radio[name='amount']").prop("checked",true);
+                $(this).parent().siblings('.bot_left').children('.radio_div').children("input:radio[name='amount']").prop("checked",false);
+            });
+        })
+     function yuding() {
+         var  amount=$("input[name='amount']:checked").val();
+         var activityId = $("#activityId").val();
+       if (amount == null){
+           alert("请选择预定方式");
+           return false;
+       }
+         $(location).attr('href',"#springUrl('/sms/liucheng?activityId="+activityId+"&tag=2&amount="+amount+"')")
+     }
+    </script>
+

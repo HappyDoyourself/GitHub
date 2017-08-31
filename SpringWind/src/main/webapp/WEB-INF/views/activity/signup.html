@@ -1,0 +1,82 @@
+<!DOCTYPE html> 
+<html> 
+<title>报名</title>
+<link href="#springUrl('/static/css/plugins/iCheck/custom.css')" rel="stylesheet">
+<style type="text/css" >
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	.some-class{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		text-align: center;
+		border:1px  solid;
+		margin-top:20px;
+		margin-left:20px;
+		margin-right: 20px;
+	}
+	.form-control {
+		width: 40%;
+		height: 34px;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		color: #555;
+		background-color: #fff;
+		background-image: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+		-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+		-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+		transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	}
+</style>
+<body>
+ <div class="some-class" >
+ <form>
+   <table style="height: 100%; width: 95%; margin-top: 10%;">
+     <tr>
+     	<td  >
+			<img alt="请输入姓名" src="#springUrl('/static/img/name.png')" style="float: left">
+			<input type="text" name="name" class="form-control" placeholder="请输入姓名" required="">
+
+		</td>
+		</tr>
+		<tr>
+		<td >
+			<img alt="请输入手机号" src="#springUrl('/static/img/phone.png')" style="float: left">
+			<input type="text" name="phone" class="form-control" placeholder="请输入手机号" required="">
+
+		</td>
+		</tr>
+		<tr>
+		<td >
+			<img alt="请输入手机号" src="#springUrl('/static/img/yanzhengma.png')" style="float: left">
+			<input type="text" name="yanzhengma" class="form-control" placeholder="请输入验证码" required="">
+			<input type="button" name="" id="" value="发送验证码"  style="float:right; background-color: #FF0000;height: 50px;width: 200px;" />
+		</td>
+		</tr>
+		<tr>
+		  <td><input type="submit"  value="下一步" id="next" style="background-color:#FF0000; height:100px;
+		  width:100%;"/></td>
+		</tr>
+    </table>
+	</form>
+</div>
+
+ <script src="#springUrl('/static/js/jquery-2.1.1.js')"></script>
+ <script src="#springUrl('/static/js/bootstrap.min.js')"></script>
+
+ <script type="text/javascript">
+
+</script> 
+
+</body> 
+</html>
